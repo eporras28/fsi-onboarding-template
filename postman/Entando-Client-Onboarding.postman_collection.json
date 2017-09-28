@@ -1,0 +1,171 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Entando-Client-Onboarding",
+		"_postman_id": "6ea9e982-3bd4-bd30-4f63-dc18114d5abc",
+		"description": "RESTful requests of the Entando Client Onboarding demo.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://co-client-onboarding.127.0.0.1.xip.io/kie-server/services/rest/server/containers/",
+			"request": {
+				"url": "http://co-client-onboarding.127.0.0.1.xip.io/kie-server/services/rest/server/containers/",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "X-KIE-ContentType",
+						"value": "JSON",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<solver-instance>\n  <status>SOLVING</status>\n    <planning-problem class=\"optaplanner.cloud_balancing.CloudBalancingSolution\">\n  <processes>\n    <optaplanner.cloud__balancing.Process>\n      <id>1</id>\n      <requiredCpu>2</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>2</id>\n      <requiredCpu>1</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>3</id>\n      <requiredCpu>3</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>4</id>\n      <requiredCpu>1</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n  </processes>\n  <computers>\n    <optaplanner.cloud__balancing.Computer>\n      <id>1</id>\n      <cpu>4</cpu>\n      <cost>300</cost>\n    </optaplanner.cloud__balancing.Computer>\n    <optaplanner.cloud__balancing.Computer>\n      <id>2</id>\n      <cpu>5</cpu>\n      <cost>500</cost>\n    </optaplanner.cloud__balancing.Computer>\n    <optaplanner.cloud__balancing.Computer>\n      <id>3</id>\n      <cpu>6</cpu>\n      <cost>700</cost>\n    </optaplanner.cloud__balancing.Computer>\n  </computers>\n  </planning-problem>\n</solver-instance>"
+				},
+				"description": "Get containers"
+			},
+			"response": []
+		},
+		{
+			"name": "http://co-client-onboarding.127.0.0.1.xip.io/kie-server/services/rest/server/containers/client-onboarding/processes/commercial-client-onboarding.ClientOnboardingProcess/instances/correlation/entando-1",
+			"request": {
+				"url": "http://co-client-onboarding.127.0.0.1.xip.io/kie-server/services/rest/server/containers/client-onboarding/processes/commercial-client-onboarding.ClientOnboardingProcess/instances/correlation/entando-1",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "X-KIE-ContentType",
+						"value": "JSON",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"client\":{\n      \"com.redhat.bpms.demo.fsi.onboarding.model.Client\":{\n         \"id\":null,\n         \"name\":\"Matteo\",\n         \"country\":\"IT\",\n         \"type\":\"BIG_BUSINESS\",\n         \"bic\":\"123456789\",\n         \"relatedParties\":[\n            {\n               \"com.redhat.bpms.demo.fsi.onboarding.model.RelatedParty\":{\n                  \"id\":null,\n                  \"relationship\":\"Consultant\",\n                  \"party\":{\n                     \"com.redhat.bpms.demo.fsi.onboarding.model.Party\":{\n                        \"id\":null,\n                        \"name\":\"Duncan\",\n                        \"surname\":\"Doyle\",\n                        \"dateOfBirth\":1506590295001,\n                        \"ssn\":\"987654321\"\n                     }\n                  }\n               }\n            }\n         ]\n      }\n   }\n}"
+				},
+				"description": "Start process."
+			},
+			"response": []
+		},
+		{
+			"name": "http://co-client-onboarding.127.0.0.1.xip.io/kie-server/services/rest/server/queries/processes/instances/",
+			"request": {
+				"url": "http://co-client-onboarding.127.0.0.1.xip.io/kie-server/services/rest/server/queries/processes/instances/",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "X-KIE-ContentType",
+						"value": "JSON",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<solver-instance>\n  <status>SOLVING</status>\n    <planning-problem class=\"optaplanner.cloud_balancing.CloudBalancingSolution\">\n  <processes>\n    <optaplanner.cloud__balancing.Process>\n      <id>1</id>\n      <requiredCpu>2</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>2</id>\n      <requiredCpu>1</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>3</id>\n      <requiredCpu>3</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>4</id>\n      <requiredCpu>1</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n  </processes>\n  <computers>\n    <optaplanner.cloud__balancing.Computer>\n      <id>1</id>\n      <cpu>4</cpu>\n      <cost>300</cost>\n    </optaplanner.cloud__balancing.Computer>\n    <optaplanner.cloud__balancing.Computer>\n      <id>2</id>\n      <cpu>5</cpu>\n      <cost>500</cost>\n    </optaplanner.cloud__balancing.Computer>\n    <optaplanner.cloud__balancing.Computer>\n      <id>3</id>\n      <cpu>6</cpu>\n      <cost>700</cost>\n    </optaplanner.cloud__balancing.Computer>\n  </computers>\n  </planning-problem>\n</solver-instance>"
+				},
+				"description": "Get all process instances on the KIE-Server."
+			},
+			"response": []
+		},
+		{
+			"name": "http://co-client-onboarding.127.0.0.1.xip.io/kie-server/services/rest/server/containers/client-onboarding/images/processes/instances/3",
+			"request": {
+				"url": "http://co-client-onboarding.127.0.0.1.xip.io/kie-server/services/rest/server/containers/client-onboarding/images/processes/instances/3",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<solver-instance>\n  <status>SOLVING</status>\n    <planning-problem class=\"optaplanner.cloud_balancing.CloudBalancingSolution\">\n  <processes>\n    <optaplanner.cloud__balancing.Process>\n      <id>1</id>\n      <requiredCpu>2</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>2</id>\n      <requiredCpu>1</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>3</id>\n      <requiredCpu>3</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>4</id>\n      <requiredCpu>1</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n  </processes>\n  <computers>\n    <optaplanner.cloud__balancing.Computer>\n      <id>1</id>\n      <cpu>4</cpu>\n      <cost>300</cost>\n    </optaplanner.cloud__balancing.Computer>\n    <optaplanner.cloud__balancing.Computer>\n      <id>2</id>\n      <cpu>5</cpu>\n      <cost>500</cost>\n    </optaplanner.cloud__balancing.Computer>\n    <optaplanner.cloud__balancing.Computer>\n      <id>3</id>\n      <cpu>6</cpu>\n      <cost>700</cost>\n    </optaplanner.cloud__balancing.Computer>\n  </computers>\n  </planning-problem>\n</solver-instance>"
+				},
+				"description": "Get the process image."
+			},
+			"response": []
+		},
+		{
+			"name": "http://co-client-onboarding.127.0.0.1.xip.io/kie-server/services/rest/server/queries/processes/instances/",
+			"request": {
+				"url": "http://co-client-onboarding.127.0.0.1.xip.io/kie-server/services/rest/server/containers/client-onboarding/processes/instances/1/signal/account_registered",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "X-KIE-ContentType",
+						"value": "JSON",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": "Signal account registered."
+			},
+			"response": []
+		}
+	]
+}
