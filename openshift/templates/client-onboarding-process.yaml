@@ -1,0 +1,456 @@
+apiVersion: v1
+kind: Template
+metadata:
+  creationTimestamp: null
+  name: client-onboarding-process
+objects:
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    generation: 1
+    labels:
+      app: processserver64-postgresql-s2i
+      application: co
+      template: processserver64-postgresql-s2i
+      xpaas: 1.4.6
+    name: co
+  spec:
+    lookupPolicy:
+      local: false
+  status:
+    dockerImageRepository: ""
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: processserver64-postgresql-s2i
+      application: co
+      template: processserver64-postgresql-s2i
+      xpaas: 1.4.6
+    name: co
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: co:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      contextDir: commercial-client-onboarding
+      git:
+        ref: ${GIT_REF}
+        uri: ${GIT_URI}
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: KIE_CONTAINER_DEPLOYMENT
+          value: client-onboarding=com.redhat.bpms.demo.fsi:commercial-client-onboarding:1.0.0-SNAPSHOT
+        - name: MAVEN_MIRROR_URL
+        - name: ARTIFACT_DIR
+        forcePull: true
+        from:
+          kind: ImageStreamTag
+          name: jboss-processserver64-openshift:1.0
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: yR13jcAo
+      type: GitHub
+    - generic:
+        secret: RjmlK3pl
+      type: Generic
+    - imageChange: {}
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    lastVersion: 0
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    generation: 1
+    labels:
+      app: processserver64-postgresql-s2i
+      application: co
+      template: processserver64-postgresql-s2i
+      xpaas: 1.4.6
+    name: co
+  spec:
+    replicas: 1
+    selector:
+      deploymentConfig: co
+    strategy:
+      activeDeadlineSeconds: 21600
+      recreateParams:
+        timeoutSeconds: 600
+      resources: {}
+      type: Recreate
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: processserver64-postgresql-s2i
+          application: co
+          deploymentConfig: co
+        name: co
+      spec:
+        containers:
+        - env:
+          - name: KIE_SERVER_BPM_UI_DISABLED
+            value: "false"
+          - name: KIE_CONTAINER_DEPLOYMENT
+            value: client-onboarding=com.redhat.bpms.demo.fsi:commercial-client-onboarding:1.0.0-SNAPSHOT
+          - name: KIE_SERVER_PROTOCOL
+            value: https
+          - name: KIE_SERVER_PORT
+            value: "8443"
+          - name: KIE_SERVER_USER
+            value: kieserver
+          - name: KIE_SERVER_PASSWORD
+            value: kieserver1!
+          - name: KIE_SERVER_DOMAIN
+            value: other
+          - name: KIE_SERVER_PERSISTENCE_DIALECT
+            value: org.hibernate.dialect.PostgreSQL82Dialect
+          - name: DB_SERVICE_PREFIX_MAPPING
+            value: co-postgresql=DB
+          - name: DB_JNDI
+            value: java:jboss/datasources/ExampleDS
+          - name: DB_USERNAME
+            value: userPoK
+          - name: DB_PASSWORD
+            value: OmEJPWCy
+          - name: DB_DATABASE
+            value: root
+          - name: TX_DATABASE_PREFIX_MAPPING
+            value: co-postgresql=DB
+          - name: DB_MIN_POOL_SIZE
+          - name: DB_MAX_POOL_SIZE
+          - name: DB_TX_ISOLATION
+          - name: HTTPS_KEYSTORE_DIR
+            value: /etc/processserver-secret-volume
+          - name: HTTPS_KEYSTORE
+            value: keystore.jks
+          - name: HTTPS_NAME
+            value: jboss
+          - name: HTTPS_PASSWORD
+            value: jboss@01
+          - name: HORNETQ_CLUSTER_PASSWORD
+            value: gEnskvrn
+          - name: HORNETQ_QUEUES
+          - name: HORNETQ_TOPICS
+          image: co
+          imagePullPolicy: Always
+          livenessProbe:
+            exec:
+              command:
+              - /bin/bash
+              - -c
+              - /opt/eap/bin/livenessProbe.sh
+            failureThreshold: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: co
+          ports:
+          - containerPort: 8778
+            name: jolokia
+            protocol: TCP
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          - containerPort: 8443
+            name: https
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - /bin/bash
+              - -c
+              - /opt/eap/bin/readinessProbe.sh
+            failureThreshold: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/processserver-secret-volume
+            name: processserver-keystore-volume
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: processserver-service-account
+        serviceAccountName: processserver-service-account
+        terminationGracePeriodSeconds: 60
+        volumes:
+        - name: processserver-keystore-volume
+          secret:
+            defaultMode: 420
+            secretName: processserver-app-secret
+    test: false
+    triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - co
+        from:
+          kind: ImageStreamTag
+          name: co:latest
+          namespace: client-onboarding-developer
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    availableReplicas: 0
+    latestVersion: 0
+    observedGeneration: 0
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    generation: 1
+    labels:
+      app: processserver64-postgresql-s2i
+      application: co
+      template: processserver64-postgresql-s2i
+      xpaas: 1.4.6
+    name: co-postgresql
+  spec:
+    replicas: 1
+    selector:
+      deploymentConfig: co-postgresql
+    strategy:
+      activeDeadlineSeconds: 21600
+      recreateParams:
+        timeoutSeconds: 600
+      resources: {}
+      type: Recreate
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: processserver64-postgresql-s2i
+          application: co
+          deploymentConfig: co-postgresql
+        name: co-postgresql
+      spec:
+        containers:
+        - env:
+          - name: KIE_SERVER_BPM_UI_DISABLED
+            value: "false"
+          - name: POSTGRESQL_USER
+            value: userPoK
+          - name: POSTGRESQL_PASSWORD
+            value: OmEJPWCy
+          - name: POSTGRESQL_DATABASE
+            value: root
+          - name: POSTGRESQL_MAX_CONNECTIONS
+          - name: POSTGRESQL_SHARED_BUFFERS
+          image: centos/postgresql-95-centos7@sha256:4e4ace155f41924b9d922b4e975d98fce5f926d18a2bbb9a87dfd0392bb85086
+          imagePullPolicy: Always
+          name: co-postgresql
+          ports:
+          - containerPort: 5432
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 60
+    test: false
+    triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - co-postgresql
+        from:
+          kind: ImageStreamTag
+          name: postgresql:9.5
+          namespace: openshift
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    availableReplicas: 0
+    latestVersion: 0
+    observedGeneration: 0
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      description: The web server's http port.
+      openshift.io/generated-by: OpenShiftNewApp
+      service.alpha.openshift.io/dependencies: '[{"name": "co-postgresql", "kind":
+        "Service"}]'
+    creationTimestamp: null
+    labels:
+      app: processserver64-postgresql-s2i
+      application: co
+      template: processserver64-postgresql-s2i
+      xpaas: 1.4.6
+    name: co
+  spec:
+    ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      deploymentConfig: co
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      description: The database server's port.
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: processserver64-postgresql-s2i
+      application: co
+      template: processserver64-postgresql-s2i
+      xpaas: 1.4.6
+    name: co-postgresql
+  spec:
+    ports:
+    - port: 5432
+      protocol: TCP
+      targetPort: 5432
+    selector:
+      deploymentConfig: co-postgresql
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      description: The web server's https port.
+      openshift.io/generated-by: OpenShiftNewApp
+      service.alpha.openshift.io/dependencies: '[{"name": "co-postgresql", "kind":
+        "Service"}]'
+    creationTimestamp: null
+    labels:
+      app: processserver64-postgresql-s2i
+      application: co
+      template: processserver64-postgresql-s2i
+      xpaas: 1.4.6
+    name: secure-co
+  spec:
+    ports:
+    - port: 8443
+      protocol: TCP
+      targetPort: 8443
+    selector:
+      deploymentConfig: co
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Route
+  metadata:
+    annotations:
+      description: Route for application's http service.
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/host.generated: "true"
+    creationTimestamp: null
+    labels:
+      app: processserver64-postgresql-s2i
+      application: co
+      template: processserver64-postgresql-s2i
+      xpaas: 1.4.6
+    name: co
+  spec:
+    host: co-client-onboarding-developer.127.0.0.1.xip.io
+    to:
+      kind: Service
+      name: co
+      weight: 100
+    wildcardPolicy: None
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: 2017-09-29T10:19:36Z
+        status: "True"
+        type: Admitted
+      host: co-client-onboarding-developer.127.0.0.1.xip.io
+      routerName: router
+      wildcardPolicy: None
+- apiVersion: v1
+  kind: Route
+  metadata:
+    annotations:
+      description: Route for application's https service.
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/host.generated: "true"
+    creationTimestamp: null
+    labels:
+      app: processserver64-postgresql-s2i
+      application: co
+      template: processserver64-postgresql-s2i
+      xpaas: 1.4.6
+    name: secure-co
+  spec:
+    host: secure-co-client-onboarding-developer.127.0.0.1.xip.io
+    tls:
+      termination: passthrough
+    to:
+      kind: Service
+      name: secure-co
+      weight: 100
+    wildcardPolicy: None
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: 2017-09-29T10:19:36Z
+        status: "True"
+        type: Admitted
+      host: secure-co-client-onboarding-developer.127.0.0.1.xip.io
+      routerName: router
+      wildcardPolicy: None
+parameters:
+- description: Git source URI for application
+  displayName: Git source repository
+  name: GIT_URI
+  required: true
+  value: https://github.com/entando/fsi-onboarding-bpm.git
+- description: Git branch/tag reference
+  displayName: Git branch/tag reference
+  name: GIT_REF
+  required: true
+  value: master
