@@ -10,7 +10,7 @@
 		{
 			"name": "http://co-client-onboarding.127.0.0.1.xip.io/kie-server/services/rest/server/containers/",
 			"request": {
-				"url": "http://co-client-onboarding.127.0.0.1.xip.io/kie-server/services/rest/server/containers/",
+				"url": "http://{{kie-server-host}}/kie-server/services/rest/server/containers/",
 				"method": "GET",
 				"header": [
 					{
@@ -45,7 +45,7 @@
 		{
 			"name": "http://co-client-onboarding.127.0.0.1.xip.io/kie-server/services/rest/server/containers/client-onboarding/processes/commercial-client-onboarding.ClientOnboardingProcess/instances/correlation/entando-1",
 			"request": {
-				"url": "http://co-client-onboarding.127.0.0.1.xip.io/kie-server/services/rest/server/containers/client-onboarding/processes/commercial-client-onboarding.ClientOnboardingProcess/instances/correlation/entando-1",
+				"url": "http://{{kie-server-host}}/kie-server/services/rest/server/containers/client-onboarding/processes/commercial-client-onboarding.ClientOnboardingProcess/instances/correlation/entando-1",
 				"method": "POST",
 				"header": [
 					{
@@ -80,7 +80,7 @@
 		{
 			"name": "http://co-client-onboarding.127.0.0.1.xip.io/kie-server/services/rest/server/queries/processes/instances/",
 			"request": {
-				"url": "http://co-client-onboarding.127.0.0.1.xip.io/kie-server/services/rest/server/queries/processes/instances/",
+				"url": "http://{{kie-server-host}}/kie-server/services/rest/server/queries/processes/instances/",
 				"method": "GET",
 				"header": [
 					{
@@ -115,7 +115,7 @@
 		{
 			"name": "http://co-client-onboarding.127.0.0.1.xip.io/kie-server/services/rest/server/containers/client-onboarding/images/processes/instances/3",
 			"request": {
-				"url": "http://co-client-onboarding.127.0.0.1.xip.io/kie-server/services/rest/server/containers/client-onboarding/images/processes/instances/3",
+				"url": "http://co-client-onboarding-developer.127.0.0.1.xip.io/kie-server/services/rest/server/containers/client-onboarding/images/processes/instances/3",
 				"method": "GET",
 				"header": [
 					{
@@ -135,7 +135,7 @@
 		{
 			"name": "http://co-client-onboarding.127.0.0.1.xip.io/kie-server/services/rest/server/queries/processes/instances/",
 			"request": {
-				"url": "http://co-client-onboarding.127.0.0.1.xip.io/kie-server/services/rest/server/containers/client-onboarding/processes/instances/1/signal/account_registered",
+				"url": "http://{{kie-server-host}}/kie-server/services/rest/server/containers/client-onboarding/processes/instances/1/signal/account_registered",
 				"method": "POST",
 				"header": [
 					{
