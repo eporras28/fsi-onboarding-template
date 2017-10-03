@@ -222,8 +222,14 @@ function create_projects() {
 function create_secrets() {
   pushd /tmp
   echo_header "Creating keystores..."
-  rm keystore.jks
-  rm jgroups.jceks
+  # First remove the old keystores, otherwise the keytool script will complain.
+  if [ -f keystore.jks ]; then
+    rm keystore.jks
+  fi
+  if [ -f jgroups.jceks ]; then
+    rm jgroups.jceks
+  fi
+
   keytool -genkeypair -alias https -storetype JKS -keystore keystore.jks -storepass jboss@01 -keypass jboss@01 --dname "CN=jim,OU=BU,O=redhat.com,L=Raleigh,S=NC,C=US"
   keytool -genseckey -alias jgroups -storetype JCEKS -keystore jgroups.jceks -storepass jboss@01 -keypass jboss@01 --dname "CN=jim,OU=BU,O=redhat.com,L=Raleigh,S=NC,C=US"
 
@@ -245,7 +251,7 @@ function create_service_account() {
 
 function create_application() {
   echo_header "Creating Client Onboarding Build and Deployment config."
-  # TODO: Introduce variables in the template if required. 
+  # TODO: Introduce variables in the template if required.
   oc process -f templates/client-onboarding-process.yaml -p GIT_URI="$GIT_URI" -p GIT_REF="$GIT_REF" -n $PRJ | oc create -f - -n $PRJ
 
   # Don't need to patch, because the template we've used is already pre-patched.
@@ -269,7 +275,7 @@ function build_and_deploy() {
 
 #function build_and_deploy_binary() {
 #  start_maven_build
-#  
+#
 #  echo_header "Starting OpenShift binary deploy..."
 #  oc start-build employee-rostering --from-file=target/ROOT.war
 #}
