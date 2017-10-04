@@ -56,7 +56,7 @@ Vagrant.configure(2) do |config|
   # Example for VirtualBox:
   #
   config.vm.provider "virtualbox" do |vb|
-     vb.name = "jboss-bpmsuite-workshop"
+     vb.name = "fsi-onboarding"
   #   # Display the VirtualBox GUI when booting the machine
      vb.gui = true
   #
