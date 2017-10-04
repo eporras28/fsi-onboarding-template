@@ -1,0 +1,74 @@
+---
+- name: OpenShift Origin version
+  debug:
+    msg: "{{ openshift_origin_version }}"
+
+- name: Install OpenShift Origin 1.5 Repository
+  yum:
+    name: "{{'centos-release-openshift-origin' + openshift_origin_version}}"
+    state: latest
+
+- name: Install OpenShift Origin client tools
+  yum:
+    name: origin-clients
+    state: latest
+
+# After installation, bring up the cluster
+- name: OC Cluster config and data dir
+  debug:
+    msg: "oc cluster hostdir: {{ oc_cluster_host_config_dir }} and config dir {{ oc_cluster_host_data_dir }}"
+
+- name: Create command line for oc cluster up execution
+  set_fact:
+    oc_cluster_up_cmd: >-
+      {{ oc_cmd }} cluster up
+      --public-hostname={{ oc_cluster_hostname }}
+      --routing-suffix={{ oc_cluster_routing_suffix }}
+      --host-config-dir={{ oc_cluster_host_config_dir }}
+      --host-data-dir={{ oc_cluster_host_data_dir }}
+    #  --host-pv-dir={{ persistedvol_mount_point }}
+    #  --image={{ origin_image_name }}
+    #  --version={{ origin_image_tag }}
+    #  {% if use_custom_config %}--host-config-dir={{ oc_host_config_dir }}{% endif %}
+    #  --service-catalog=true
+  #when:
+
+- name: OC Cluster Up command
+  debug:
+    msg: "OC Cluster Up command: {{ oc_cluster_up_cmd }}"
+
+#- name: echo hello
+#  command: echo hello
+#  register: myresult
+
+#- name: Non empty result.
+#  command: echo "stdout was not null {{myresult.stdout}}"
+#  when: myresult.stdout != ""
+
+#- name: Empty result
+#  command: echo "stdout was null"
+#  when: myresult.stdout == ""
+
+- name: Check if OC Cluster Up is running
+  shell: ps aux | grep "oc cluster up" | grep -v grep
+  ignore_errors: yes
+  changed_when: false
+  register: oc_cluster_up_status
+
+- name: Report status of OC Cluster Up
+  debug:
+    msg: "oc cluster up is not running. Return code from `grep`: {{ oc_cluster_up_status.rc }}"
+  when: oc_cluster_up_status.rc != 0
+
+- name: Report status of OC Cluster Up
+  debug:
+    msg: "oc cluster up is running. Return code from `grep`: {{ oc_cluster_up_status.rc }}"
+  when: oc_cluster_up_status.rc == 0
+
+
+
+
+# Start the cluster
+#- name: OC Cluster Up
+#  shell: "{{oc_cluster_up_cmd}}"
+  #when: generate_config

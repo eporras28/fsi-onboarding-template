@@ -1,0 +1,15 @@
+- hosts: default
+  remote_user: vagrant
+  become: true
+  become_method: sudo
+  become_user: root
+  roles:
+    - centos
+    - gnome
+    - openshift
+#    - openshift
+  tags:
+    - centos
+    - gnome
+    - openshift
+#    - openshift

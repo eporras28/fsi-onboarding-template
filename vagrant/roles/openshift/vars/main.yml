@@ -1,0 +1,8 @@
+---
+# Variables of the OpenShift installation.
+openshift_origin_version: "36"
+oc_cmd: "oc"
+oc_cluster_hostname: "127.0.0.1"
+oc_cluster_routing_suffix: "127.0.0.1.xip.io"
+oc_cluster_host_config_dir: "/home/{{ ansible_user }}/oc_cluster_config"
+oc_cluster_host_data_dir: "/home/{{ ansible_user }}/oc_cluster_data"

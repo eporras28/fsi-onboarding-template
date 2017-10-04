@@ -1,0 +1,73 @@
+---
+# Installs OpenJDK
+# Corresponds to docker layer: https://github.com/jboss-dockerfiles/base-jdk
+- name: Install Docker - yum
+  become: true
+  become_user: root
+  yum:
+    name: "{{ 'docker' }}"
+    state: latest
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: Install Docker - dnf
+  become: true
+  become_user: root
+  dnf:
+    name: "{{ 'docker' }}"
+    state: latest
+  when: ansible_distribution == 'Fedora'
+
+- name: Copy Docker deamon.json configuration file
+  become: true
+  become_user: root
+  copy:
+    src: "daemon.json"
+    dest: "/etc/docker"
+    owner: "root"
+    group: "root"
+    mode: "644"
+  notify: restart docker
+
+- name: Start and Enable docker Service
+  service:
+    name: docker
+    state: started
+    enabled: true
+
+# Give the current user access to docker via sudo
+# https://www.projectatomic.io/blog/2015/08/why-we-dont-let-non-root-users-run-docker-in-centos-fedora-or-rhel/
+
+# Set group of /var/run/docker.sock to "docker" (not secure, see above, but currently I don't see a better option.)
+- name: Create 'docker' group
+  group:
+    name: docker
+    state: present
+
+- name: Create 'docker' group
+  user:
+    name: vagrant
+    groups: docker
+    append: yes
+
+- name: Set 'docker.sock' permissions
+  file:
+    path: /var/run/docker.sock
+    owner: root
+    group: docker
+    mode: 0660
+
+# Flush the handlers after this role.
+- meta: flush_handlers
+
+#- name: Allow 'vagrant' user to execute /usr/bin/docker without password.
+#  lineinfile:
+#    dest: /etc/sudoers
+#    state: present
+#    regexp: '^vagrant'
+#    line: 'vagrant        ALL=(ALL)       NOPASSWD: /usr/bin/docker'
+#    validate: visudo -cf %s
+
+#- lineinfile:
+#    path: /home/{{ansible_user}}/.bashrc
+#    regexp: '^alias docker='
+#    line: 'alias docker="sudo /usr/bin/docker"'
