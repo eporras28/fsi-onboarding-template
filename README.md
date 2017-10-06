@@ -28,16 +28,27 @@ available, please scroll down to the *Building the Virtual Machine* section.
 
 ### Prerequisites
 
-. Install https://www.openshift.org/download.html[the oc client tools].
+* Install https://www.openshift.org/download.html[the oc client tools].
 
-. Login into the OpenShift in which the demo needs to be provisioned. Depending on the installation you can login with:
-.. `oc login <url>`: The `oc` client will ask for a username and password.
-.. `oc login <url> <toke>`: The provided token is used for authentication.
-
+* Login into the OpenShift in which the demo needs to be provisioned. Depending on the installation you can login with:
+- `oc login <url>`: The `oc` client will ask for a username and password.
+- `oc login <url> <toke>`: The provided token is used for authentication.
 
 NOTE: To copy-paste the login command and token, go to your OpenShift web console and look for _Help_ > _Command line tools_.
 
 ### Install demo
+
+Our demo uses the JBoss BPM Suite Intelligent Process Server as the process execution runtime. To be able to use this runtime, we need to configure our OpenShift environment to support the JBoss ImageStreams and Templates required by this runtime:
+
+* Run the following command to install the JBoss ImageStreams:
+```
+oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/jboss-image-streams.json -n openshift
+```
+* Run the following commands to install the Process Server templates:
+```
+oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/processserver/processserver64-postgresql-s2i.json -n openshift
+oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/processserver/processserver64-postgresql-persistent-s2i.json -n openshift
+```
 
 Use the provision scripts to setup, configure, build and deploy the demo on OpenShift:
 
@@ -64,10 +75,10 @@ provisioned
 
 ### Prerequisites
 
-. An installation of https://www.virtualbox.org[VirtualBox]
-. A https://www.vagrantup.com[Vagrant] installation.
-. The Vagrant VBGuest plugin needs to be installed. If you don't have this plugin installed, you can install it with the command: `vagrant plugin install vagrant-vbguest`
-. An https://www.ansible.com[Ansible] installation.
+* An installation of https://www.virtualbox.org[VirtualBox]
+* A https://www.vagrantup.com[Vagrant] installation.
+* The Vagrant VBGuest plugin needs to be installed. If you don't have this plugin installed, you can install it with the command: `vagrant plugin install vagrant-vbguest`
+* An https://www.ansible.com[Ansible] installation.
 
 ### Building the VM
 
@@ -79,7 +90,7 @@ the directory in which you checked out this Git repository:
 
 Vagrant uses the provided Ansible playbook [entando-client-onboarding-playbook.yml](vagrant/entando-client-onboarding-playbook.yml) to provision
 the VM and install:
-. Gnome
-. Docker
-. OpenShift
-. Client Onboarding Demo
+* Gnome
+* Docker
+* OpenShift
+* Client Onboarding Demo
