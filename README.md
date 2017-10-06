@@ -31,8 +31,8 @@ available, please scroll down to the *Building the Virtual Machine* section.
 * Install https://www.openshift.org/download.html[the oc client tools].
 
 * Login into the OpenShift in which the demo needs to be provisioned. Depending on the installation you can login with:
-- `oc login <url>`: The `oc` client will ask for a username and password.
-- `oc login <url> <toke>`: The provided token is used for authentication.
+  - `oc login <url>`: The `oc` client will ask for a username and password.
+  - `oc login <url> <toke>`: The provided token is used for authentication.
 
 NOTE: To copy-paste the login command and token, go to your OpenShift web console and look for _Help_ > _Command line tools_.
 
