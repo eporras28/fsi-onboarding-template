@@ -40,6 +40,8 @@ NOTE: To copy-paste the login command and token, go to your OpenShift web consol
 
 Our demo uses the JBoss BPM Suite Intelligent Process Server as the process execution runtime. To be able to use this runtime, we need to configure our OpenShift environment to support the JBoss ImageStreams and Templates required by this runtime:
 
+* First, login to OpenShift as the system admin: `oc login -u system:admin`
+
 * Run the following command to install the JBoss ImageStreams:
 ```
 oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/jboss-image-streams.json -n openshift
@@ -51,6 +53,9 @@ oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templ
 ```
 
 Now that we've configured ImageStreams and Templates we can provision our demo. Use the provided provision scripts to setup, configure, build and deploy the demo on OpenShift:
+
+* First, login to OpenShift with your user account (e.g. developer/developer): `oc login`
+* Next, run the provided `provision.sh` script to provision the demo:
 
 ```
 ./openshift/provision.sh setup client-onboarding
