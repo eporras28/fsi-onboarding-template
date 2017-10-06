@@ -77,7 +77,7 @@ the directory in which you checked out this Git repository:
 ./vagrant/vagrant up
 ```
 
-Vagrant uses the provided Ansible playbook [entando-client-onboarding-playbook.yml])(vagrant/entando-client-onboarding-playbook.yml) to provision
+Vagrant uses the provided Ansible playbook [entando-client-onboarding-playbook.yml](vagrant/entando-client-onboarding-playbook.yml) to provision
 the VM and install:
 . Gnome
 . Docker
