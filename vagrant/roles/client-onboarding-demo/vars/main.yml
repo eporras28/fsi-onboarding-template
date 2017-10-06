@@ -1,0 +1,4 @@
+---
+# Variables of the OpenShift installation.
+git_repo_name: fsi-onboarding-template
+git_repo_url: https://www.github.com/entando/{{ git_repo_name }}

@@ -37,38 +37,25 @@
   debug:
     msg: "OC Cluster Up command: {{ oc_cluster_up_cmd }}"
 
-#- name: echo hello
-#  command: echo hello
-#  register: myresult
-
-#- name: Non empty result.
-#  command: echo "stdout was not null {{myresult.stdout}}"
-#  when: myresult.stdout != ""
-
-#- name: Empty result
-#  command: echo "stdout was null"
-#  when: myresult.stdout == ""
-
 - name: Check if OC Cluster Up is running
-  shell: ps aux | grep "oc cluster up" | grep -v grep
+  #shell: 'ps aux | grep "oc cluster up" | grep -v grep'
+  #shell: ps aux | grep 'oc cluster up' | grep -v grep
+  shell: docker ps | grep "openshift/origin-pod:v3.6.0" | grep -v grep
   ignore_errors: yes
   changed_when: false
   register: oc_cluster_up_status
 
-- name: Report status of OC Cluster Up
+- name: "Report status of OC Cluster Up: cluster is down"
   debug:
     msg: "oc cluster up is not running. Return code from `grep`: {{ oc_cluster_up_status.rc }}"
   when: oc_cluster_up_status.rc != 0
 
-- name: Report status of OC Cluster Up
+- name: "Report status of OC Cluster Up: cluster is up"
   debug:
     msg: "oc cluster up is running. Return code from `grep`: {{ oc_cluster_up_status.rc }}"
   when: oc_cluster_up_status.rc == 0
 
-
-
-
 # Start the cluster
-#- name: OC Cluster Up
-#  shell: "{{oc_cluster_up_cmd}}"
-  #when: generate_config
+- name: OC Cluster Up
+  shell: "{{oc_cluster_up_cmd}}"
+  when: oc_cluster_up_status.rc != 0

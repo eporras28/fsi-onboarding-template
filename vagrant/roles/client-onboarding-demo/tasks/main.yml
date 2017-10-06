@@ -1,0 +1,61 @@
+---
+- name: Fetch demo from Git.
+  git:
+    repo: '{{ git_repo_url }}'
+    dest: "/tmp/git/{{ git_repo_name }}"
+    clone: yes
+    update: no
+
+- name: Login to OpenShift as admin
+  shell: oc login -u system:admin
+
+- name: Check for JBoss Image Streams
+  shell: oc get is/jboss-processserver64-openshift -n openshift
+  ignore_errors: yes
+  changed_when: false
+  register: oc_is_status
+
+- name: Provision the JBoss Image Streams
+  shell: oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/jboss-image-streams.json -n openshift
+  when: oc_is_status.rc != 0
+
+- name: Check for the Process Server - PostgreSQL template
+  shell: oc get template/processserver64-postgresql-s2i -n openshift
+  ignore_errors: yes
+  changed_when: false
+  register: oc_processserver_template_status
+
+- name: Provision the Process Server - PostgreSQL template
+  shell: oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/processserver/processserver64-postgresql-s2i.json -n openshift
+  when: oc_processserver_template_status.rc != 0
+
+- name: Check for the Process Server - PostgreSQL Persistent template
+  shell: oc get template/processserver64-postgresql-s2i -n openshift
+  ignore_errors: yes
+  changed_when: false
+  register: oc_processserver_persistent_template_status
+
+- name: Provision the Process Server - PostgreSQL Persistent template
+  shell: oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/processserver/processserver64-postgresql-persistent-s2i.json -n openshift
+  when: oc_processserver_persistent_template_status.rc != 0
+
+- name: Login to OpenShift as developer
+  shell: oc login -u developer -p developer
+
+- name: Check for demo
+  shell: oc get projects | grep client-onboarding-developer
+  ignore_errors: yes
+  changed_when: false
+  register: oc_client_onboarding_demo_status
+
+- name: Provision demo
+  shell: ./provision.sh setup client-onboarding
+  args:
+    chdir: /tmp/git/{{ git_repo_name }}/openshift
+  when: oc_client_onboarding_demo_status.rc != 0
+
+- name: Redeploy demo
+  shell: ./provision.sh deploy client-onboarding
+  args:
+    chdir: /tmp/git/{{ git_repo_name }}/openshift
+  when: oc_client_onboarding_demo_status.rc == 0

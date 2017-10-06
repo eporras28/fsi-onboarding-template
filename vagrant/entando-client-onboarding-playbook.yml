@@ -7,9 +7,11 @@
     - centos
     - gnome
     - openshift
+    - client-onboarding-demo
 #    - openshift
   tags:
     - centos
     - gnome
     - openshift
+    - client-onboarding-demo
 #    - openshift
