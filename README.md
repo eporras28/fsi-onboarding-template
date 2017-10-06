@@ -1,15 +1,15 @@
-= Red Hat JBoss BPM Suite & Entando Client Onboarding FSI Demo
+# Red Hat JBoss BPM Suite & Entando Client Onboarding FSI Demo
 
 A _Client Onboarding_ FSI Demo, developed in Red Hat JBoss BPM Suite and Entando, running on OpenShift.
 
 *TODO*: Insert link to introduction video on Youtube.
 
-== Use case
+## Use case
 
 *TODO*: Describe the use-case.
 
 
-== Running the demo
+## Running the demo
 
 This demo runs both on local installations of OpenShift Origin and OpenShift Container Platform,
 as well as OpenShift Enterprise, OpenShift Dedicated and OpenShift Online instances.
@@ -21,12 +21,12 @@ If you don't have a local installation of OpenShift on your machine, but do have
 build a demo VirtualMachine using the provided https://www.vagrantup.com[Vagrant] and https://www.ansible.com[Ansible scripts].
 
 
-== Running on OpenShift
+## Running on OpenShift
 
 This section describes how to run this demo on your OpenShift environment. If you don't have an OpenShift environment (either locally or online)
 available, please scroll down to the *Building the Virtual Machine* section.
 
-=== Prerequisites
+### Prerequisites
 
 . Install https://www.openshift.org/download.html[the oc client tools].
 
@@ -37,7 +37,7 @@ available, please scroll down to the *Building the Virtual Machine* section.
 
 NOTE: To copy-paste the login command and token, go to your OpenShift web console and look for _Help_ > _Command line tools_.
 
-==== Install demo
+### Install demo
 
 Use the provision scripts to setup, configure, build and deploy the demo on OpenShift:
 
@@ -46,30 +46,30 @@ Use the provision scripts to setup, configure, build and deploy the demo on Open
 ```
 
 
-=== Delete the OpenShift application and project
+### Delete the OpenShift application and project
 
 ```
 ./openshift/provision.sh delete client-onboarding
 ```
 
-=== Run the demo
+### Run the demo
 
 *TODO*: Describe how to run the demo
 
 
-== Building the Virtual Machine
+## Building the Virtual Machine
 
 If you don't have an OpenShift environment available, you can also build a Virtual Machine with the full demo-environment (including OpenShift)
 provisioned
 
-=== Prerequisites
+### Prerequisites
 
 . An installation of https://www.virtualbox.org[VirtualBox]
 . A https://www.vagrantup.com[Vagrant] installation.
 . The Vagrant VBGuest plugin needs to be installed. If you don't have this plugin installed, you can install it with the command: `vagrant plugin install vagrant-vbguest`
 . An https://www.ansible.com[Ansible] installation.
 
-=== Building the VM
+### Building the VM
 
 We've provided a [Vagrantfile](vagrant/Vagrantfile) which fully automates the installation of the VirtualMachine. Run the following command in
 the directory in which you checked out this Git repository:
