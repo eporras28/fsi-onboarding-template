@@ -50,12 +50,11 @@ oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templ
 oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/processserver/processserver64-postgresql-persistent-s2i.json -n openshift
 ```
 
-Use the provision scripts to setup, configure, build and deploy the demo on OpenShift:
+Now that we've configured ImageStreams and Templates we can provision our demo. Use the provided provision scripts to setup, configure, build and deploy the demo on OpenShift:
 
 ```
 ./openshift/provision.sh setup client-onboarding
 ```
-
 
 ### Delete the OpenShift application and project
 
