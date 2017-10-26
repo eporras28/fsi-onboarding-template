@@ -56,6 +56,16 @@
     group: docker
     mode: 0660
 
+# Check whether the directory '/etc/docker/certs.d/registry.access.redhat.com' exists, and if it does, rename it.
+# This is to prevent problems on OpenShift Docker pull when we have not registered our CentOS box with the Red Hat Subscription Manager.
+- name: stat registry.access.redhat.com
+  stat: path=/etc/docker/certs.d/registry.access.redhat.com
+  register: registry_access_redhat_com_stat
+
+- name: Remove the 'registry.access.redhat.com' certificate symlink my renaming the directory.
+  command: mv /etc/docker/certs.d/registry.access.redhat.com /etc/docker/certs.d/registry.access.redhat.com.orig
+  when: registry_access_redhat_com_stat.stat.exists
+
 # Flush the handlers after this role.
 - meta: flush_handlers
 
