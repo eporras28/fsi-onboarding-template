@@ -128,6 +128,8 @@ objects:
             value: other
           - name: KIE_SERVER_PERSISTENCE_DIALECT
             value: org.hibernate.dialect.PostgreSQL82Dialect
+          - name: KIE_SERVER_FILTER_CLASSES
+            value: "false"
           - name: DB_SERVICE_PREFIX_MAPPING
             value: co-postgresql=DB
           - name: DB_JNDI
