@@ -130,6 +130,8 @@ objects:
             value: org.hibernate.dialect.PostgreSQL82Dialect
           - name: KIE_SERVER_FILTER_CLASSES
             value: "false"
+          - name: KIE_SERVER_BYPASS_AUTH_USER
+            value: "true"
           - name: DB_SERVICE_PREFIX_MAPPING
             value: co-postgresql=DB
           - name: DB_JNDI
