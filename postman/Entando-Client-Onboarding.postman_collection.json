@@ -80,7 +80,7 @@
 		{
 			"name": "Start new process",
 			"request": {
-				"url": "http://{{kie-server-host}}/kie-server/services/rest/server/containers/client-onboarding/processes/commercial-client-onboarding.ClientOnboardingProcess/instances/correlation/entando-1",
+				"url": "http://{{kie-server-host}}/kie-server/services/rest/server/containers/client-onboarding/processes/commercial-client-onboarding.ClientOnboardingProcess/instances/correlation/entando-15",
 				"method": "POST",
 				"header": [
 					{
@@ -106,7 +106,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n   \"client\":{\n      \"com.redhat.bpms.demo.fsi.onboarding.model.Client\":{\n         \"id\":null,\n         \"name\":\"Matteo\",\n         \"country\":\"IT\",\n         \"type\":\"BIG_BUSINESS\",\n         \"bic\":\"123456789\",\n         \"relatedParties\":[\n            {\n               \"com.redhat.bpms.demo.fsi.onboarding.model.RelatedParty\":{\n                  \"id\":null,\n                  \"relationship\":\"Consultant\",\n                  \"party\":{\n                     \"com.redhat.bpms.demo.fsi.onboarding.model.Party\":{\n                        \"id\":null,\n                        \"name\":\"Duncan\",\n                        \"surname\":\"Doyle\",\n                        \"dateOfBirth\":1506590295001,\n                        \"ssn\":\"987654321\",\n                        \"email\": \"ddoyle@redhat.com\"\n                     }\n                  }\n               }\n            }\n         ]\n      }\n   }\n}"
+					"raw": "{\n   \"client\":{\n      \"com.redhat.bpms.demo.fsi.onboarding.model.Client\":{\n         \"id\":null,\n         \"name\":\"Matteo\",\n         \"country\":\"IT\",\n         \"type\":\"BIG_BUSINESS\",\n         \"bic\":\"123456789\",\n         \"relatedParties\":[\n            {\n               \"com.redhat.bpms.demo.fsi.onboarding.model.RelatedParty\":{\n                  \"id\":null,\n                  \"relationship\":\"Consultant\",\n                  \"party\":{\n                     \"com.redhat.bpms.demo.fsi.onboarding.model.Party\":{\n                        \"id\":null,\n                        \"name\":\"Duncan\",\n                        \"surname\":\"Doyle\",\n                        \"dateOfBirth\":1506590295001,\n                        \"ssn\":\"987654321\",\n                        \"email\": \"ddoyle@redhat.com\"\n                     }\n                  }\n               }\n            }\n         ]\n      }\n   },\n   \"accountManager\": \"prakash\"\n}"
 				},
 				"description": "Start process."
 			},
@@ -815,6 +815,148 @@
 					"raw": "{\n  \"htUploadedDocument\" : {\n    \"identifier\" : \"myCoolIdentifier\",\n    \"name\" : \"My Cool Document.\",\n    \"link\" : \"my-cool-link\",\n    \"size\" : 1200,\n    \"lastModified\" : 1507840764549,\n    \"content\" : \"VkdocGN5QnBjeUJoSUhOaGJYQnNaU0JwWkdWdWRHbG1hV05oZEdsdmJpQmtiMk4xYldWdWRDND0=\",\n    \"attributes\" : {\n      \"testKey\" : \"testValue\"\n    }\n  }\n}"
 				},
 				"description": "Complete task with document and auto-progress."
+			},
+			"response": []
+		},
+		{
+			"name": "Register Process Instance with Client Custom Vars Advanced Query.",
+			"request": {
+				"url": "http://{{kie-server-host}}/kie-server/services/rest/server/queries/definitions/getProcessInstancesOfClient",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "X-KIE-ContentType",
+						"value": "JSON",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"query-name\" : \"getProcessInstancesOfClient\",\n  \"query-source\" : \"java:jboss/datasources/ExampleDS\",\n  \"query-expression\" : \"select pil.*, c.id as clientId, c.name, c.bic, c.type from ProcessInstanceLog pil inner join (select mv.map_var_id, mv.processinstanceid from MappedVariable mv) mv on (mv.processinstanceid = pil.id) inner join Client c on (c.id = mv.map_var_id)\",\n  \"query-target\" : \"PROCESS\"\n}"
+				},
+				"description": "Register Process Instance with Client Custom Vars Advanced Query."
+			},
+			"response": []
+		},
+		{
+			"name": "Query Process Instances with Client",
+			"request": {
+				"url": {
+					"raw": "http://{{kie-server-host}}/kie-server/services/rest/server/queries/definitions/getProcessInstancesOfClient/filtered-data?mapper=ProcessInstancesWithCustomVariables&page=0&pageSize=100",
+					"protocol": "http",
+					"host": [
+						"{{kie-server-host}}"
+					],
+					"path": [
+						"kie-server",
+						"services",
+						"rest",
+						"server",
+						"queries",
+						"definitions",
+						"getProcessInstancesOfClient",
+						"filtered-data"
+					],
+					"query": [
+						{
+							"key": "mapper",
+							"value": "ProcessInstancesWithCustomVariables",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "page",
+							"value": "0",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "pageSize",
+							"value": "100",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "X-KIE-ContentType",
+						"value": "JSON",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"order-asc\" : false,\n  \"query-params\" : [ {\n    \"cond-column\" : \"bic\",\n    \"cond-operator\" : \"EQUALS_TO\",\n    \"cond-values\" : [ \"123456789\" ]\n  } ]\n}"
+				},
+				"description": "Query Process Instances with Client."
+			},
+			"response": []
+		},
+		{
+			"name": "Replace Process Instance with Client Custom Vars Advanced Query.",
+			"request": {
+				"url": "http://{{kie-server-host}}/kie-server/services/rest/server/queries/definitions/getProcessInstancesOfClient",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "X-KIE-ContentType",
+						"value": "JSON",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"query-name\" : \"getProcessInstancesOfClient\",\n  \"query-source\" : \"java:jboss/datasources/ExampleDS\",\n  \"query-expression\" : \"select pil.*, c.id as clientId, c.name, c.bic, c.type from ProcessInstanceLog pil inner join (select mv.map_var_id, mv.processinstanceid from MappedVariable mv) mv on (mv.processinstanceid = pil.id) inner join Client c on (c.id = mv.map_var_id)\",\n  \"query-target\" : \"PROCESS\"\n}"
+				},
+				"description": "Replace Process Instance with Client Custom Vars Advanced Query."
 			},
 			"response": []
 		}
