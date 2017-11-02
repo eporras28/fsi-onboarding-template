@@ -43,6 +43,41 @@
 			"response": []
 		},
 		{
+			"name": "Get Process Start form",
+			"request": {
+				"url": "http://{{kie-server-host}}/kie-server/services/rest/server/containers/client-onboarding/forms/processes/commercial-client-onboarding.ClientOnboardingProcess",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "X-KIE-ContentType",
+						"value": "JSON",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<solver-instance>\n  <status>SOLVING</status>\n    <planning-problem class=\"optaplanner.cloud_balancing.CloudBalancingSolution\">\n  <processes>\n    <optaplanner.cloud__balancing.Process>\n      <id>1</id>\n      <requiredCpu>2</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>2</id>\n      <requiredCpu>1</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>3</id>\n      <requiredCpu>3</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>4</id>\n      <requiredCpu>1</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n  </processes>\n  <computers>\n    <optaplanner.cloud__balancing.Computer>\n      <id>1</id>\n      <cpu>4</cpu>\n      <cost>300</cost>\n    </optaplanner.cloud__balancing.Computer>\n    <optaplanner.cloud__balancing.Computer>\n      <id>2</id>\n      <cpu>5</cpu>\n      <cost>500</cost>\n    </optaplanner.cloud__balancing.Computer>\n    <optaplanner.cloud__balancing.Computer>\n      <id>3</id>\n      <cpu>6</cpu>\n      <cost>700</cost>\n    </optaplanner.cloud__balancing.Computer>\n  </computers>\n  </planning-problem>\n</solver-instance>"
+				},
+				"description": "Get containers"
+			},
+			"response": []
+		},
+		{
 			"name": "Start new process",
 			"request": {
 				"url": "http://{{kie-server-host}}/kie-server/services/rest/server/containers/client-onboarding/processes/commercial-client-onboarding.ClientOnboardingProcess/instances/correlation/entando-1",
