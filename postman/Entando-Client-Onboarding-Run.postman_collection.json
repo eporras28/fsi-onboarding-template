@@ -427,7 +427,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"htUploadedDocument\" : {\n    \"identifier\" : \"myCoolIdentifier\",\n    \"name\" : \"My Cool Document.\",\n    \"link\" : \"my-cool-link\",\n    \"size\" : 1200,\n    \"lastModified\" : 1507840764549,\n    \"content\" : \"VkdocGN5QnBjeUJoSUhOaGJYQnNaU0JwWkdWdWRHbG1hV05oZEdsdmJpQmtiMk4xYldWdWRDND0=\",\n    \"attributes\" : {\n      \"testKey\" : \"testValue\"\n    }\n  }\n}"
+					"raw": "{\n  \"htUploadedDocument\" : {\n  \t\"org.jbpm.document.service.impl.DocumentImpl\":{\n      \"identifier\" : \"myCoolIdentifier\",\n      \"name\" : \"My Cool Document.\",\n      \"link\" : \"my-cool-link\",\n      \"size\" : 1200,\n      \"lastModified\" : 1507840764549,\n      \"content\" : \"VkdocGN5QnBjeUJoSUhOaGJYQnNaU0JwWkdWdWRHbG1hV05oZEdsdmJpQmtiMk4xYldWdWRDND0=\",\n      \"attributes\" : {\n        \"testKey\" : \"testValue\"\n      }\n  \t}\n  }\n}"
 				},
 				"description": "Complete task with document."
 			},

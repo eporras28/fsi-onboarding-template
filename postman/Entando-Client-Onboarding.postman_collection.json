@@ -437,7 +437,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"htUploadedDocument\" : {\n    \"identifier\" : \"myCoolIdentifier\",\n    \"name\" : \"My Cool Document.\",\n    \"link\" : \"my-cool-link\",\n    \"size\" : 1200,\n    \"lastModified\" : 1507840764549,\n    \"content\" : \"VkdocGN5QnBjeUJoSUhOaGJYQnNaU0JwWkdWdWRHbG1hV05oZEdsdmJpQmtiMk4xYldWdWRDND0=\",\n    \"attributes\" : {\n      \"testKey\" : \"testValue\"\n    }\n  }\n}"
+					"raw": "{\n  \"htUploadedDocument\" : {\n  \t\"org.jbpm.document.service.impl.DocumentImpl\":{\n      \"identifier\" : \"myCoolIdentifier\",\n      \"name\" : \"My Cool Document.\",\n      \"link\" : \"my-cool-link\",\n      \"size\" : 1200,\n      \"lastModified\" : 1507840764549,\n      \"content\" : \"VkdocGN5QnBjeUJoSUhOaGJYQnNaU0JwWkdWdWRHbG1hV05oZEdsdmJpQmtiMk4xYldWdWRDND0=\",\n      \"attributes\" : {\n        \"testKey\" : \"testValue\"\n      }\n  \t}\n  }\n}"
 				},
 				"description": "Complete task with document."
 			},
@@ -644,6 +644,142 @@
 					"raw": "{\n  \"query-name\" : \"getProcessInstancesOfAccountManager\",\n  \"query-source\" : \"java:jboss/datasources/ExampleDS\",\n  \"query-expression\" : \"select pil.*, v.variableId, v.value from ProcessInstanceLog pil INNER JOIN VariableInstanceLog v ON (v.processInstanceId = pil.processInstanceId)INNER JOIN (select vil.processInstanceId ,vil.variableId, MAX(vil.ID) maxvilid  FROM VariableInstanceLog vil GROUP BY vil.processInstanceId, vil.variableId ORDER BY vil.processInstanceId)  x ON (v.variableId = x.variableId  AND v.id = x.maxvilid )\",\n  \"query-target\" : \"PROCESS\"\n}"
 				},
 				"description": "Replace Process Instance with Vars Advanced Query."
+			},
+			"response": []
+		},
+		{
+			"name": "Complete Additional Client Details Task",
+			"request": {
+				"url": {
+					"raw": "http://{{kie-server-host}}/kie-server/services/rest/server/containers/client-onboarding/tasks/15/states/completed?user=ddoyle&auto-progress=true",
+					"protocol": "http",
+					"host": [
+						"{{kie-server-host}}"
+					],
+					"path": [
+						"kie-server",
+						"services",
+						"rest",
+						"server",
+						"containers",
+						"client-onboarding",
+						"tasks",
+						"15",
+						"states",
+						"completed"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": "ddoyle",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "auto-progress",
+							"value": "true",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "X-KIE-ContentType",
+						"value": "JSON",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"htClient\" : {\n      \"com.redhat.bpms.demo.fsi.onboarding.model.Client\":{\n         \"id\":null,\n         \"name\":\"Matteo\",\n         \"country\":\"IT\",\n         \"type\":\"BIG_BUSINESS\",\n         \"bic\":\"123456789\",\n         \"relatedParties\":[\n            {\n               \"com.redhat.bpms.demo.fsi.onboarding.model.RelatedParty\":{\n                  \"id\":null,\n                  \"relationship\":\"Consultant\",\n                  \"party\":{\n                     \"com.redhat.bpms.demo.fsi.onboarding.model.Party\":{\n                        \"id\":null,\n                        \"name\":\"Duncan\",\n                        \"surname\":\"Doyle\",\n                        \"dateOfBirth\":1506590295001,\n                        \"ssn\":\"987654321\",\n                        \"email\": \"ddoyle@redhat.com\"\n                     }\n                  }\n               }\n            }\n         ]\n      }\n   }\n}"
+				},
+				"description": "Complete additional client details task."
+			},
+			"response": []
+		},
+		{
+			"name": "Complete Enrichment Document Task - AutoProgress",
+			"request": {
+				"url": {
+					"raw": "http://{{kie-server-host}}/kie-server/services/rest/server/containers/client-onboarding/tasks/1/states/completed?user=ddoyle&auto-progress=true",
+					"protocol": "http",
+					"host": [
+						"{{kie-server-host}}"
+					],
+					"path": [
+						"kie-server",
+						"services",
+						"rest",
+						"server",
+						"containers",
+						"client-onboarding",
+						"tasks",
+						"1",
+						"states",
+						"completed"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": "ddoyle",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "auto-progress",
+							"value": "true",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "X-KIE-ContentType",
+						"value": "JSON",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"htUploadedDocument\" : {\n    \"identifier\" : \"myCoolIdentifier\",\n    \"name\" : \"My Cool Document.\",\n    \"link\" : \"my-cool-link\",\n    \"size\" : 1200,\n    \"lastModified\" : 1507840764549,\n    \"content\" : \"VkdocGN5QnBjeUJoSUhOaGJYQnNaU0JwWkdWdWRHbG1hV05oZEdsdmJpQmtiMk4xYldWdWRDND0=\",\n    \"attributes\" : {\n      \"testKey\" : \"testValue\"\n    }\n  }\n}"
+				},
+				"description": "Complete task with document and auto-progress."
 			},
 			"response": []
 		}
