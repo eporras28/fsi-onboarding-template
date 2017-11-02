@@ -1,53 +1,42 @@
 {
+	"variables": [],
 	"info": {
 		"name": "Entando-Client-Onboarding Run",
 		"_postman_id": "a262d021-2cf9-41ea-d280-45e75c531727",
 		"description": "RESTful requests of the Entando Client Onboarding demo.",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Get all process instances",
 			"request": {
+				"url": "http://{{kie-server-host}}/kie-server/services/rest/server/queries/processes/instances/",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					},
 					{
 						"key": "Content-Type",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					},
 					{
 						"key": "X-KIE-ContentType",
-						"value": "JSON"
+						"value": "JSON",
+						"description": ""
 					},
 					{
 						"key": "Authorization",
-						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh"
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "<solver-instance>\n  <status>SOLVING</status>\n    <planning-problem class=\"optaplanner.cloud_balancing.CloudBalancingSolution\">\n  <processes>\n    <optaplanner.cloud__balancing.Process>\n      <id>1</id>\n      <requiredCpu>2</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>2</id>\n      <requiredCpu>1</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>3</id>\n      <requiredCpu>3</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>4</id>\n      <requiredCpu>1</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n  </processes>\n  <computers>\n    <optaplanner.cloud__balancing.Computer>\n      <id>1</id>\n      <cpu>4</cpu>\n      <cost>300</cost>\n    </optaplanner.cloud__balancing.Computer>\n    <optaplanner.cloud__balancing.Computer>\n      <id>2</id>\n      <cpu>5</cpu>\n      <cost>500</cost>\n    </optaplanner.cloud__balancing.Computer>\n    <optaplanner.cloud__balancing.Computer>\n      <id>3</id>\n      <cpu>6</cpu>\n      <cost>700</cost>\n    </optaplanner.cloud__balancing.Computer>\n  </computers>\n  </planning-problem>\n</solver-instance>"
-				},
-				"url": {
-					"raw": "http://{{kie-server-host}}/kie-server/services/rest/server/queries/processes/instances/",
-					"protocol": "http",
-					"host": [
-						"{{kie-server-host}}"
-					],
-					"path": [
-						"kie-server",
-						"services",
-						"rest",
-						"server",
-						"queries",
-						"processes",
-						"instances",
-						""
-					]
 				},
 				"description": "Get all process instances on the KIE-Server."
 			},
@@ -68,48 +57,33 @@
 				}
 			],
 			"request": {
+				"url": "http://{{kie-server-host}}/kie-server/services/rest/server/containers/client-onboarding/processes/commercial-client-onboarding.ClientOnboardingProcess/instances/correlation/entando-1",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					},
 					{
 						"key": "Content-Type",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					},
 					{
 						"key": "X-KIE-ContentType",
-						"value": "JSON"
+						"value": "JSON",
+						"description": ""
 					},
 					{
 						"key": "Authorization",
-						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh"
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n   \"client\":{\n      \"com.redhat.bpms.demo.fsi.onboarding.model.Client\":{\n         \"id\":null,\n         \"name\":\"Matteo\",\n         \"country\":\"IT\",\n         \"type\":\"BIG_BUSINESS\",\n         \"bic\":\"123456789\",\n         \"relatedParties\":[\n            {\n               \"com.redhat.bpms.demo.fsi.onboarding.model.RelatedParty\":{\n                  \"id\":null,\n                  \"relationship\":\"Consultant\",\n                  \"party\":{\n                     \"com.redhat.bpms.demo.fsi.onboarding.model.Party\":{\n                        \"id\":null,\n                        \"name\":\"Duncan\",\n                        \"surname\":\"Doyle\",\n                        \"dateOfBirth\":1506590295001,\n                        \"ssn\":\"987654321\",\n                        \"email\": \"ddoyle@redhat.com\"\n                     }\n                  }\n               }\n            }\n         ]\n      }\n   }\n}"
-				},
-				"url": {
-					"raw": "http://{{kie-server-host}}/kie-server/services/rest/server/containers/client-onboarding/processes/commercial-client-onboarding.ClientOnboardingProcess/instances/correlation/entando-1",
-					"protocol": "http",
-					"host": [
-						"{{kie-server-host}}"
-					],
-					"path": [
-						"kie-server",
-						"services",
-						"rest",
-						"server",
-						"containers",
-						"client-onboarding",
-						"processes",
-						"commercial-client-onboarding.ClientOnboardingProcess",
-						"instances",
-						"correlation",
-						"entando-1"
-					]
+					"raw": "{\n   \"client\":{\n      \"com.redhat.bpms.demo.fsi.onboarding.model.Client\":{\n         \"id\":null,\n         \"name\":\"Matteo\",\n         \"country\":\"IT\",\n         \"type\":\"BIG_BUSINESS\",\n         \"bic\":\"123456789\",\n         \"relatedParties\":[\n            {\n               \"com.redhat.bpms.demo.fsi.onboarding.model.RelatedParty\":{\n                  \"id\":null,\n                  \"relationship\":\"Consultant\",\n                  \"party\":{\n                     \"com.redhat.bpms.demo.fsi.onboarding.model.Party\":{\n                        \"id\":null,\n                        \"name\":\"Duncan\",\n                        \"surname\":\"Doyle\",\n                        \"dateOfBirth\":1506590295001,\n                        \"ssn\":\"987654321\",\n                        \"email\": \"ddoyle@redhat.com\"\n                     }\n                  }\n               }\n            }\n         ]\n      }\n   },\n   \"accountManager\": \"prakash\"\n}"
 				},
 				"description": "Start process."
 			},
@@ -118,55 +92,40 @@
 		{
 			"name": "Signal process with account name",
 			"request": {
+				"url": "http://{{kie-server-host}}/kie-server/services/rest/server/containers/client-onboarding/processes/instances/{{parent-process-id}}/signal/account_registered",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					},
 					{
 						"key": "Content-Type",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					},
 					{
 						"key": "X-KIE-ContentType",
-						"value": "JSON"
+						"value": "JSON",
+						"description": ""
 					},
 					{
 						"key": "Authorization",
-						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh"
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "\"{{account-id}}\""
 				},
-				"url": {
-					"raw": "http://{{kie-server-host}}/kie-server/services/rest/server/containers/client-onboarding/processes/instances/{{parent-process-id}}/signal/account_registered",
-					"protocol": "http",
-					"host": [
-						"{{kie-server-host}}"
-					],
-					"path": [
-						"kie-server",
-						"services",
-						"rest",
-						"server",
-						"containers",
-						"client-onboarding",
-						"processes",
-						"instances",
-						"{{parent-process-id}}",
-						"signal",
-						"account_registered"
-					]
-				},
 				"description": "Signal account registered."
 			},
 			"response": []
 		},
 		{
-			"name": "Get human tasks",
+			"name": "Get Enrichment Document human tasks",
 			"event": [
 				{
 					"listen": "test",
@@ -257,29 +216,6 @@
 				}
 			],
 			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					},
-					{
-						"key": "X-KIE-ContentType",
-						"value": "JSON"
-					},
-					{
-						"key": "Authorization",
-						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "<solver-instance>\n  <status>SOLVING</status>\n    <planning-problem class=\"optaplanner.cloud_balancing.CloudBalancingSolution\">\n  <processes>\n    <optaplanner.cloud__balancing.Process>\n      <id>1</id>\n      <requiredCpu>2</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>2</id>\n      <requiredCpu>1</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>3</id>\n      <requiredCpu>3</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>4</id>\n      <requiredCpu>1</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n  </processes>\n  <computers>\n    <optaplanner.cloud__balancing.Computer>\n      <id>1</id>\n      <cpu>4</cpu>\n      <cost>300</cost>\n    </optaplanner.cloud__balancing.Computer>\n    <optaplanner.cloud__balancing.Computer>\n      <id>2</id>\n      <cpu>5</cpu>\n      <cost>500</cost>\n    </optaplanner.cloud__balancing.Computer>\n    <optaplanner.cloud__balancing.Computer>\n      <id>3</id>\n      <cpu>6</cpu>\n      <cost>700</cost>\n    </optaplanner.cloud__balancing.Computer>\n  </computers>\n  </planning-problem>\n</solver-instance>"
-				},
 				"url": {
 					"raw": "http://{{kie-server-host}}/kie-server/services/rest/server/queries/tasks/instances/pot-owners?user={{account-id}}",
 					"protocol": "http",
@@ -300,9 +236,38 @@
 						{
 							"key": "user",
 							"value": "{{account-id}}",
-							"equals": true
+							"equals": true,
+							"description": ""
 						}
-					]
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "X-KIE-ContentType",
+						"value": "JSON",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<solver-instance>\n  <status>SOLVING</status>\n    <planning-problem class=\"optaplanner.cloud_balancing.CloudBalancingSolution\">\n  <processes>\n    <optaplanner.cloud__balancing.Process>\n      <id>1</id>\n      <requiredCpu>2</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>2</id>\n      <requiredCpu>1</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>3</id>\n      <requiredCpu>3</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>4</id>\n      <requiredCpu>1</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n  </processes>\n  <computers>\n    <optaplanner.cloud__balancing.Computer>\n      <id>1</id>\n      <cpu>4</cpu>\n      <cost>300</cost>\n    </optaplanner.cloud__balancing.Computer>\n    <optaplanner.cloud__balancing.Computer>\n      <id>2</id>\n      <cpu>5</cpu>\n      <cost>500</cost>\n    </optaplanner.cloud__balancing.Computer>\n    <optaplanner.cloud__balancing.Computer>\n      <id>3</id>\n      <cpu>6</cpu>\n      <cost>700</cost>\n    </optaplanner.cloud__balancing.Computer>\n  </computers>\n  </planning-problem>\n</solver-instance>"
 				},
 				"description": ""
 			},
@@ -311,29 +276,6 @@
 		{
 			"name": "Start next task",
 			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					},
-					{
-						"key": "X-KIE-ContentType",
-						"value": "JSON"
-					},
-					{
-						"key": "Authorization",
-						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://{{kie-server-host}}/kie-server/services/rest/server/containers/client-onboarding/tasks/{{next-task-id}}/states/started?user={{account-id}}",
 					"protocol": "http",
@@ -356,9 +298,38 @@
 						{
 							"key": "user",
 							"value": "{{account-id}}",
-							"equals": true
+							"equals": true,
+							"description": ""
 						}
-					]
+					],
+					"variable": []
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "X-KIE-ContentType",
+						"value": "JSON",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
 				},
 				"description": "Start task"
 			},
@@ -403,29 +374,6 @@
 				}
 			],
 			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					},
-					{
-						"key": "X-KIE-ContentType",
-						"value": "JSON"
-					},
-					{
-						"key": "Authorization",
-						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"htUploadedDocument\" : {\n    \"identifier\" : \"myCoolIdentifier\",\n    \"name\" : \"My Cool Document.\",\n    \"link\" : \"my-cool-link\",\n    \"size\" : 1200,\n    \"lastModified\" : 1507840764549,\n    \"content\" : \"VkdocGN5QnBjeUJoSUhOaGJYQnNaU0JwWkdWdWRHbG1hV05oZEdsdmJpQmtiMk4xYldWdWRDND0=\",\n    \"attributes\" : {\n      \"testKey\" : \"testValue\"\n    }\n  }\n}"
-				},
 				"url": {
 					"raw": "http://{{kie-server-host}}/kie-server/services/rest/server/containers/client-onboarding/tasks/{{next-task-id}}/states/completed?user={{account-id}}",
 					"protocol": "http",
@@ -448,9 +396,38 @@
 						{
 							"key": "user",
 							"value": "{{account-id}}",
-							"equals": true
+							"equals": true,
+							"description": ""
 						}
-					]
+					],
+					"variable": []
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "X-KIE-ContentType",
+						"value": "JSON",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"htUploadedDocument\" : {\n    \"identifier\" : \"myCoolIdentifier\",\n    \"name\" : \"My Cool Document.\",\n    \"link\" : \"my-cool-link\",\n    \"size\" : 1200,\n    \"lastModified\" : 1507840764549,\n    \"content\" : \"VkdocGN5QnBjeUJoSUhOaGJYQnNaU0JwWkdWdWRHbG1hV05oZEdsdmJpQmtiMk4xYldWdWRDND0=\",\n    \"attributes\" : {\n      \"testKey\" : \"testValue\"\n    }\n  }\n}"
 				},
 				"description": "Complete task with document."
 			},
@@ -466,10 +443,6 @@
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
 							"tests['Status code is 200'] = responseCode.code === 200;",
-							"//tests['Host should be set'] = jsonData.headers.Host === 'httpbin.org';",
-							"//tests['URL should be set'] = jsonData.url === 'http://httpbin.org'",
-							"",
-							"//console.log(jsonData)",
 							"",
 							"console.log(\"Retrieving task ids from response\");",
 							"var taskArray = jsonData['task-summary'];",
@@ -492,14 +465,12 @@
 							"    //And set the task list as environment variable.",
 							"    console.log(\"Remaing task id array: \" + enrichmentDocumentManualApprovalTaskList);",
 							"    postman.setEnvironmentVariable(\"enrichment-document-manual-approval-task-list\", JSON.stringify(enrichmentDocumentManualApprovalTaskList));    ",
-							"    postman.setNextRequest('Start next admin task');",
+							"    postman.setNextRequest('Start next task');",
 							"} else {",
 							"    //List of Enrichment Documents is empty, so we can jump to another task.",
 							"    console.log(\"No Enrichment Document tasks found.\");",
 							"    // If that's the case, we want to work on the 'Additional Client Details' task.",
-							"    //TODO: Do something else. Currently we stop.",
-							"    console.log(\"Stopping run!\");",
-							"    postman.setNextRequest(null);",
+							"    postman.setNextRequest(\"Get Additional Client Details human tasks\");",
 							"}",
 							"console.log(enrichmentDocumentManualApprovalTaskList);",
 							""
@@ -508,29 +479,6 @@
 				}
 			],
 			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					},
-					{
-						"key": "X-KIE-ContentType",
-						"value": "JSON"
-					},
-					{
-						"key": "Authorization",
-						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "<solver-instance>\n  <status>SOLVING</status>\n    <planning-problem class=\"optaplanner.cloud_balancing.CloudBalancingSolution\">\n  <processes>\n    <optaplanner.cloud__balancing.Process>\n      <id>1</id>\n      <requiredCpu>2</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>2</id>\n      <requiredCpu>1</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>3</id>\n      <requiredCpu>3</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>4</id>\n      <requiredCpu>1</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n  </processes>\n  <computers>\n    <optaplanner.cloud__balancing.Computer>\n      <id>1</id>\n      <cpu>4</cpu>\n      <cost>300</cost>\n    </optaplanner.cloud__balancing.Computer>\n    <optaplanner.cloud__balancing.Computer>\n      <id>2</id>\n      <cpu>5</cpu>\n      <cost>500</cost>\n    </optaplanner.cloud__balancing.Computer>\n    <optaplanner.cloud__balancing.Computer>\n      <id>3</id>\n      <cpu>6</cpu>\n      <cost>700</cost>\n    </optaplanner.cloud__balancing.Computer>\n  </computers>\n  </planning-problem>\n</solver-instance>"
-				},
 				"url": {
 					"raw": "http://{{kie-server-host}}/kie-server/services/rest/server/queries/tasks/instances/pot-owners?user={{admin-id}}",
 					"protocol": "http",
@@ -551,9 +499,38 @@
 						{
 							"key": "user",
 							"value": "{{admin-id}}",
-							"equals": true
+							"equals": true,
+							"description": ""
 						}
-					]
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "X-KIE-ContentType",
+						"value": "JSON",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<solver-instance>\n  <status>SOLVING</status>\n    <planning-problem class=\"optaplanner.cloud_balancing.CloudBalancingSolution\">\n  <processes>\n    <optaplanner.cloud__balancing.Process>\n      <id>1</id>\n      <requiredCpu>2</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>2</id>\n      <requiredCpu>1</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>3</id>\n      <requiredCpu>3</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>4</id>\n      <requiredCpu>1</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n  </processes>\n  <computers>\n    <optaplanner.cloud__balancing.Computer>\n      <id>1</id>\n      <cpu>4</cpu>\n      <cost>300</cost>\n    </optaplanner.cloud__balancing.Computer>\n    <optaplanner.cloud__balancing.Computer>\n      <id>2</id>\n      <cpu>5</cpu>\n      <cost>500</cost>\n    </optaplanner.cloud__balancing.Computer>\n    <optaplanner.cloud__balancing.Computer>\n      <id>3</id>\n      <cpu>6</cpu>\n      <cost>700</cost>\n    </optaplanner.cloud__balancing.Computer>\n  </computers>\n  </planning-problem>\n</solver-instance>"
 				},
 				"description": ""
 			},
@@ -562,29 +539,6 @@
 		{
 			"name": "Start next admin task",
 			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					},
-					{
-						"key": "X-KIE-ContentType",
-						"value": "JSON"
-					},
-					{
-						"key": "Authorization",
-						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://{{kie-server-host}}/kie-server/services/rest/server/containers/client-onboarding/tasks/{{next-task-id}}/states/started?user={{admin-id}}",
 					"protocol": "http",
@@ -607,9 +561,38 @@
 						{
 							"key": "user",
 							"value": "{{admin-id}}",
-							"equals": true
+							"equals": true,
+							"description": ""
 						}
-					]
+					],
+					"variable": []
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "X-KIE-ContentType",
+						"value": "JSON",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
 				},
 				"description": "Start task"
 			},
@@ -644,7 +627,7 @@
 							"    // If that's the case, we want to work on the 'Additional Client Details' task.",
 							"    //TODO: Do something else. Currently we stop.",
 							"    console.log(\"Stopping run!\");",
-							"    postman.setNextRequest(null);",
+							"    postman.setNextRequest(\"Get Additional Client Details human tasks\");",
 							"}",
 							"console.log(enrichmentDocumentManualApprovalTaskList);"
 						]
@@ -652,29 +635,6 @@
 				}
 			],
 			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					},
-					{
-						"key": "X-KIE-ContentType",
-						"value": "JSON"
-					},
-					{
-						"key": "Authorization",
-						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"htApprovalStatus\" : \"Approved because of this and this.\",\n  \"htUploadedDocumentApproved\" : true\n}\n"
-				},
 				"url": {
 					"raw": "http://{{kie-server-host}}/kie-server/services/rest/server/containers/client-onboarding/tasks/{{next-task-id}}/states/completed?user={{admin-id}}",
 					"protocol": "http",
@@ -697,11 +657,308 @@
 						{
 							"key": "user",
 							"value": "{{admin-id}}",
-							"equals": true
+							"equals": true,
+							"description": ""
 						}
-					]
+					],
+					"variable": []
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "X-KIE-ContentType",
+						"value": "JSON",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"htApprovalStatus\" : \"Approved because of this and this.\",\n  \"htUploadedDocumentApproved\" : true\n}\n"
 				},
 				"description": "Complete Manual Approval Task."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Additional Client Details human tasks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"tests['Status code is 200'] = responseCode.code === 200;",
+							"//tests['Host should be set'] = jsonData.headers.Host === 'httpbin.org';",
+							"//tests['URL should be set'] = jsonData.url === 'http://httpbin.org'",
+							"",
+							"//console.log(jsonData)",
+							"",
+							"console.log(\"Retrieving task ids from response\");",
+							"var taskArray = jsonData['task-summary'];",
+							"var additionalClientDetailsTaskList = [];",
+							"for (var task of taskArray) {",
+							"    var nextTaskId = task['task-id'];",
+							"    //Enrichment Upload Document tasks.",
+							"    if (task['task-name'] == \"Additional Client Details\") {",
+							"        console.log(\"Pushing task id to list: \" + nextTaskId);",
+							"        additionalClientDetailsTaskList.push({id: nextTaskId});",
+							"    }",
+							"}",
+							"",
+							"//Additional Client Details",
+							"if (additionalClientDetailsTaskList.length) {",
+							"    //Array is not empty. Pop the first id.",
+							"    var nextTaskId = additionalClientDetailsTaskList.pop().id;",
+							"    console.log(\"Next task id to process is: \" + nextTaskId);",
+							"    postman.setEnvironmentVariable(\"next-task-id\", nextTaskId);",
+							"    //And set the task list as environment variable.",
+							"    console.log(\"Remaing task id array: \" + additionalClientDetailsTaskList);",
+							"    postman.setEnvironmentVariable(\"additional-client-details-task-list\", JSON.stringify(additionalClientDetailsTaskList));    ",
+							"    postman.setNextRequest('Start next additional client details task');",
+							"} else {",
+							"    //List of Enrichment Documents is empty, so we can jump to another task.",
+							"    console.log(\"No Enrichment Document tasks found.\");",
+							"    // If that's the case, we want to work on the 'Additional Client Details' task.",
+							"    //TODO: Do something else. Currently we stop.",
+							"    postman.setNextRequest(null);",
+							"}",
+							"",
+							"console.log(additionalClientDetailsTaskList);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": {
+					"raw": "http://{{kie-server-host}}/kie-server/services/rest/server/queries/tasks/instances/pot-owners?user={{account-id}}",
+					"protocol": "http",
+					"host": [
+						"{{kie-server-host}}"
+					],
+					"path": [
+						"kie-server",
+						"services",
+						"rest",
+						"server",
+						"queries",
+						"tasks",
+						"instances",
+						"pot-owners"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": "{{account-id}}",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "X-KIE-ContentType",
+						"value": "JSON",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<solver-instance>\n  <status>SOLVING</status>\n    <planning-problem class=\"optaplanner.cloud_balancing.CloudBalancingSolution\">\n  <processes>\n    <optaplanner.cloud__balancing.Process>\n      <id>1</id>\n      <requiredCpu>2</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>2</id>\n      <requiredCpu>1</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>3</id>\n      <requiredCpu>3</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>4</id>\n      <requiredCpu>1</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n  </processes>\n  <computers>\n    <optaplanner.cloud__balancing.Computer>\n      <id>1</id>\n      <cpu>4</cpu>\n      <cost>300</cost>\n    </optaplanner.cloud__balancing.Computer>\n    <optaplanner.cloud__balancing.Computer>\n      <id>2</id>\n      <cpu>5</cpu>\n      <cost>500</cost>\n    </optaplanner.cloud__balancing.Computer>\n    <optaplanner.cloud__balancing.Computer>\n      <id>3</id>\n      <cpu>6</cpu>\n      <cost>700</cost>\n    </optaplanner.cloud__balancing.Computer>\n  </computers>\n  </planning-problem>\n</solver-instance>"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Start next additional client details task",
+			"request": {
+				"url": {
+					"raw": "http://{{kie-server-host}}/kie-server/services/rest/server/containers/client-onboarding/tasks/{{next-task-id}}/states/started?user={{account-id}}",
+					"protocol": "http",
+					"host": [
+						"{{kie-server-host}}"
+					],
+					"path": [
+						"kie-server",
+						"services",
+						"rest",
+						"server",
+						"containers",
+						"client-onboarding",
+						"tasks",
+						"{{next-task-id}}",
+						"states",
+						"started"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": "{{account-id}}",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "X-KIE-ContentType",
+						"value": "JSON",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": "Start additional client details task"
+			},
+			"response": []
+		},
+		{
+			"name": "Complete Additional Client Details Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"//Set the next task",
+							"var additionalClientDetailsTaskList = JSON.parse(environment['additional-client-details-task-list']);",
+							"",
+							"console.log(\"Completed this task. Setting the next one from this list: \" + additionalClientDetailsTaskList);",
+							"",
+							"//Enrichment Documents",
+							"if (additionalClientDetailsTaskList.length) {",
+							"    //Array is not empty. Pop the first id.",
+							"    var nextTaskId = additionalClientDetailsTaskList.pop().id;",
+							"    console.log(\"Next task id to process is: \" + nextTaskId);",
+							"    postman.setEnvironmentVariable(\"next-task-id\", nextTaskId);",
+							"    //And set the task list as environment variable.",
+							"    console.log(\"Remaing task id array: \" + additionalClientDetailsTaskList);",
+							"    postman.setEnvironmentVariable(\"additional-client-details-task-list\", JSON.stringify(additionalClientDetailsTaskList));    ",
+							"    postman.setNextRequest('Start next task additional client details task');",
+							"} else {",
+							"    //List of Enrichment Documents is empty, so we can jump to another task.",
+							"    console.log(\"No Additional Client Details tasks found.\");",
+							"    ",
+							"    //TODO: Do something else. Currently we stop.",
+							"    //console.log(\"Moving to admin tasks\");",
+							"    postman.setNextRequest(null);",
+							"}",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": {
+					"raw": "http://{{kie-server-host}}/kie-server/services/rest/server/containers/client-onboarding/tasks/{{next-task-id}}/states/completed?user={{account-id}}",
+					"protocol": "http",
+					"host": [
+						"{{kie-server-host}}"
+					],
+					"path": [
+						"kie-server",
+						"services",
+						"rest",
+						"server",
+						"containers",
+						"client-onboarding",
+						"tasks",
+						"{{next-task-id}}",
+						"states",
+						"completed"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": "{{account-id}}",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "X-KIE-ContentType",
+						"value": "JSON",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"htClient\" : {\n      \"com.redhat.bpms.demo.fsi.onboarding.model.Client\":{\n         \"id\":null,\n         \"name\":\"Matteo\",\n         \"country\":\"IT\",\n         \"type\":\"BIG_BUSINESS\",\n         \"bic\":\"123456789\",\n         \"relatedParties\":[\n            {\n               \"com.redhat.bpms.demo.fsi.onboarding.model.RelatedParty\":{\n                  \"id\":null,\n                  \"relationship\":\"Consultant\",\n                  \"party\":{\n                     \"com.redhat.bpms.demo.fsi.onboarding.model.Party\":{\n                        \"id\":null,\n                        \"name\":\"Duncan\",\n                        \"surname\":\"Doyle\",\n                        \"dateOfBirth\":1506590295001,\n                        \"ssn\":\"987654321\",\n                        \"email\": \"ddoyle@redhat.com\"\n                     }\n                  }\n               }\n            }\n         ]\n      }\n   }\n}"
+				},
+				"description": "Complete additional client details task."
 			},
 			"response": []
 		}
