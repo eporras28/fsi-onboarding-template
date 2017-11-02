@@ -265,7 +265,7 @@
 		{
 			"name": "Delete process instance",
 			"request": {
-				"url": "http://{{kie-server-host}}/kie-server/services/rest/server/containers/client-onboarding/processes/instances/11",
+				"url": "http://{{kie-server-host}}/kie-server/services/rest/server/containers/client-onboarding/processes/instances/67",
 				"method": "DELETE",
 				"header": [
 					{
@@ -276,7 +276,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "<solver-instance>\n  <status>SOLVING</status>\n    <planning-problem class=\"optaplanner.cloud_balancing.CloudBalancingSolution\">\n  <processes>\n    <optaplanner.cloud__balancing.Process>\n      <id>1</id>\n      <requiredCpu>2</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>2</id>\n      <requiredCpu>1</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>3</id>\n      <requiredCpu>3</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n    <optaplanner.cloud__balancing.Process>\n      <id>4</id>\n      <requiredCpu>1</requiredCpu>\n    </optaplanner.cloud__balancing.Process>\n  </processes>\n  <computers>\n    <optaplanner.cloud__balancing.Computer>\n      <id>1</id>\n      <cpu>4</cpu>\n      <cost>300</cost>\n    </optaplanner.cloud__balancing.Computer>\n    <optaplanner.cloud__balancing.Computer>\n      <id>2</id>\n      <cpu>5</cpu>\n      <cost>500</cost>\n    </optaplanner.cloud__balancing.Computer>\n    <optaplanner.cloud__balancing.Computer>\n      <id>3</id>\n      <cpu>6</cpu>\n      <cost>700</cost>\n    </optaplanner.cloud__balancing.Computer>\n  </computers>\n  </planning-problem>\n</solver-instance>"
+					"raw": ""
 				},
 				"description": "Delete the process instance."
 			},
