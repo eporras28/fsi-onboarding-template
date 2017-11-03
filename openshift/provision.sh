@@ -260,6 +260,14 @@ function create_application() {
   #wait_while_empty "Build Config" 600 "oc get bc/co | grep co"
   #oc patch bc/co -p '{"spec":{"strategy":{"sourceStrategy":{"from":{"name":"jboss-processserver64-openshift:1.0"}}}}}'
 #  oc process -f openshift/templates/client-onboarding-entando-template.yaml
+# Entando instances creation
+echo_header "Creating Entando instances fsi-customer and fsi-backoffice."
+
+oc new-app pmasala/fsi-customer:latest --name fsi-customer
+oc expose svc fsi-customer --name=entando-fsi-customer
+oc new-app pmasala/fsi-backoffice:latest --name fsi-backoffice
+oc expose svc fsi-backoffice --name=entando-fsi-backoffice
+
 }
 
 #function create_application_binary() {
