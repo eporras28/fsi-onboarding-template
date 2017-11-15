@@ -351,7 +351,7 @@ fi
 #pushd ~ >/dev/null
 START=`date +%s`
 
-echo_header "OptaPlanner OpenShift Demo ($(date))"
+echo_header "Client Onboarding OpenShift Demo ($(date))"
 
 case "$ARG_COMMAND" in
     delete)
