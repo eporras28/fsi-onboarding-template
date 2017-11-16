@@ -61,17 +61,6 @@ Now that we've configured ImageStreams and Templates we can provision our demo. 
 ./openshift/provision.sh setup client-onboarding
 ```
 
-### Fixing user permission to execute entando instances
-
-* First, login to OpenShift as the system admin: `oc login -u system:admin`
-
-* Run the following command to give the right permission:
-
-```bash
-oc adm policy add-scc-to-user anyuid -n client-onboarding-developer -z default
-```
-
-
 ### Delete the OpenShift application and project
 
 ```
