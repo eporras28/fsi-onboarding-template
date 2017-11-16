@@ -263,9 +263,9 @@ function create_application() {
 # Entando instances creation
 echo_header "Creating Entando instances fsi-customer and fsi-backoffice."
 
-oc new-app pmasala/fsi-customer:latest --name fsi-customer
+oc new-app https://github.com/pietrangelo/fsi-customer --name fsi-customer
 oc expose svc fsi-customer --name=entando-fsi-customer
-oc new-app pmasala/fsi-backoffice:latest --name fsi-backoffice
+oc new-app https://github.com/pietrangelo/fsi-backoffice --name fsi-backoffice
 oc expose svc fsi-backoffice --name=entando-fsi-backoffice
 
 }
