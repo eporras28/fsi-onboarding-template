@@ -854,7 +854,7 @@
 			"response": []
 		},
 		{
-			"name": "Query Process Instances with Client",
+			"name": "Query all Process Instances with Client data.",
 			"request": {
 				"url": {
 					"raw": "http://{{kie-server-host}}/kie-server/services/rest/server/queries/definitions/getProcessInstancesOfClient/filtered-data?mapper=ProcessInstancesWithCustomVariables&page=0&pageSize=100",
@@ -870,6 +870,78 @@
 						"queries",
 						"definitions",
 						"getProcessInstancesOfClient",
+						"filtered-data"
+					],
+					"query": [
+						{
+							"key": "mapper",
+							"value": "ProcessInstancesWithCustomVariables",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "page",
+							"value": "0",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "pageSize",
+							"value": "100",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "X-KIE-ContentType",
+						"value": "JSON",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic a2llc2VydmVyOmtpZXNlcnZlcjEh",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"order-asc\" : false,\n  \"query-params\" : [ {\n    \"cond-column\" : \"bic\",\n    \"cond-operator\" : \"EQUALS_TO\",\n    \"cond-values\" : [ \"123456789\" ]\n  } ]\n}"
+				},
+				"description": "Query all Process Instances with Client data."
+			},
+			"response": []
+		},
+		{
+			"name": "Query Process Instances of Client",
+			"request": {
+				"url": {
+					"raw": "http://{{kie-server-host}}/kie-server/services/rest/server/queries/definitions/getProcessInstancesWithClient/filtered-data?mapper=ProcessInstancesWithCustomVariables&page=0&pageSize=100",
+					"protocol": "http",
+					"host": [
+						"{{kie-server-host}}"
+					],
+					"path": [
+						"kie-server",
+						"services",
+						"rest",
+						"server",
+						"queries",
+						"definitions",
+						"getProcessInstancesWithClient",
 						"filtered-data"
 					],
 					"query": [
