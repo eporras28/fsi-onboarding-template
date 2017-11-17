@@ -821,7 +821,7 @@
 		{
 			"name": "Register Process Instance with Client Custom Vars Advanced Query.",
 			"request": {
-				"url": "http://{{kie-server-host}}/kie-server/services/rest/server/queries/definitions/getProcessInstancesOfClient",
+				"url": "http://{{kie-server-host}}/kie-server/services/rest/server/queries/definitions/getProcessInstancesWithClient",
 				"method": "PUT",
 				"header": [
 					{
@@ -857,7 +857,7 @@
 			"name": "Query all Process Instances with Client data.",
 			"request": {
 				"url": {
-					"raw": "http://{{kie-server-host}}/kie-server/services/rest/server/queries/definitions/getProcessInstancesOfClient/filtered-data?mapper=ProcessInstancesWithCustomVariables&page=0&pageSize=100",
+					"raw": "http://{{kie-server-host}}/kie-server/services/rest/server/queries/definitions/getProcessInstancesWithClient/filtered-data?mapper=ClientOnboardingProcessInstancesWithCustomVariables&page=0&pageSize=100",
 					"protocol": "http",
 					"host": [
 						"{{kie-server-host}}"
@@ -869,13 +869,13 @@
 						"server",
 						"queries",
 						"definitions",
-						"getProcessInstancesOfClient",
+						"getProcessInstancesWithClient",
 						"filtered-data"
 					],
 					"query": [
 						{
 							"key": "mapper",
-							"value": "ProcessInstancesWithCustomVariables",
+							"value": "ClientOnboardingProcessInstancesWithCustomVariables",
 							"equals": true,
 							"description": ""
 						},
@@ -919,7 +919,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"order-asc\" : false,\n  \"query-params\" : [ {\n    \"cond-column\" : \"bic\",\n    \"cond-operator\" : \"EQUALS_TO\",\n    \"cond-values\" : [ \"123456789\" ]\n  } ]\n}"
+					"raw": "{\n  \"order-asc\" : false,\n  \"query-params\" : [ {\n    \"cond-column\" : \"status\",\n    \"cond-operator\" : \"EQUALS_TO\",\n    \"cond-values\" : [ \"1\" ]\n  } ],\n  \"result-column-mapping\" : {\n    \"clientid\" : \"integer\",\n    \"name\" : \"string\"\n  }\n}"
 				},
 				"description": "Query all Process Instances with Client data."
 			},
@@ -1000,7 +1000,7 @@
 		{
 			"name": "Replace Process Instance with Client Custom Vars Advanced Query.",
 			"request": {
-				"url": "http://{{kie-server-host}}/kie-server/services/rest/server/queries/definitions/getProcessInstancesOfClient",
+				"url": "http://{{kie-server-host}}/kie-server/services/rest/server/queries/definitions/getProcessInstancesWithClient",
 				"method": "PUT",
 				"header": [
 					{
