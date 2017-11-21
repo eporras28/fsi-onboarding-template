@@ -35,6 +35,7 @@ function usage() {
     echo "   --user [username]         The admin user for the demo projects. mandatory if logged in as system:admin"
     echo "   --project-suffix [suffix] Suffix to be added to demo project names e.g. ci-SUFFIX. If empty, user will be used as suffix."
     echo "   --run-verify              Run verify after provisioning"
+    echo "   --with-imagestreams       Creates the image streams in the project. Useful when required ImageStreams are not available in the 'openshift' namespace and cannot be provisioned in that 'namespace'."
     # TODO support --maven-mirror-url
     echo
 }
@@ -44,6 +45,7 @@ ARG_PROJECT_SUFFIX=
 ARG_COMMAND=
 ARG_RUN_VERIFY=false
 ARG_BINARY_BUILD=false
+ARG_WITH_IMAGESTREAMS=false
 ARG_DEMO=
 
 while :; do
@@ -109,6 +111,9 @@ while :; do
         --binary)
             ARG_BINARY_BUILD=true
             ;;
+        --with-imagestreams)
+            ARG_WITH_IMAGESTREAMS=true
+            ;;
         -h|--help)
             usage
             exit 0
@@ -136,9 +141,12 @@ LOGGEDIN_USER=$(oc whoami)
 OPENSHIFT_USER=${ARG_USERNAME:-$LOGGEDIN_USER}
 
 # Project name needs to be unique across OpenShift Online
-PRJ="client-onboarding-`oc whoami | sed -e 's/[^-a-z0-9]/-/g'`"
-PRJ_DISPLAY_NAME="Client Onboarding"
-PRJ_DESCRIPTION="Red Hat JBoss BPM Suite & Entando 'Client Onboarding' FSI Demo"
+
+PRJ_SUFFIX=${ARG_PROJECT_SUFFIX:-`echo $OPENSHIFT_USER | sed -e 's/[^-a-z0-9]/-/g'`}
+
+PRJ=("client-onboarding-$PRJ_SUFFIX" "Client Onboarding" "Red Hat JBoss BPM Suite & Entando 'Client Onboarding' FSI Demo")
+#PRJ_DISPLAY_NAME="Client Onboarding"
+#PRJ_DESCRIPTION="Red Hat JBoss BPM Suite & Entando 'Client Onboarding' FSI Demo"
 #GIT_URI="https://github.com/ge0ffrey/optashift-employee-rostering"
 #GIT_URI="https://github.com/DuncanDoyle/optaplanner-openshift-worker-rostering" // TODO rename to optashift-employee-rostering
 #GIT_REF="openshift-template"
@@ -215,8 +223,9 @@ function wait_while_empty() {
 function create_projects() {
   echo_header "Creating project..."
 
-  echo "Creating project $PRJ"
-  oc new-project $PRJ --display-name="$PRJ_DISPLAY_NAME" --description="$PRJ_DESCRIPTION" >/dev/null
+  echo "Creating project ${PRJ[0]}"
+#  oc new-project $PRJ --display-name="$PRJ_DISPLAY_NAME" --description="$PRJ_DESCRIPTION" >/dev/null
+  oc new-project "${PRJ[0]}" --display-name="${PRJ[1]}" --description="${PRJ[2]}" >/dev/null
 }
 
 function create_secrets() {
