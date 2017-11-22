@@ -31,7 +31,6 @@ function usage() {
     echo "   client-onboarding        Red Hat JBoss BPM Suite & Entando 'Client Onboarding' FSI demo."
     echo
     echo "OPTIONS:"
-    echo "   --binary                  Performs an OpenShift 'binary-build', which builds the WAR file locally and sends it to the OpenShift BuildConfig. Requires less memory in OpenShift."
     echo "   --user [username]         The admin user for the demo projects. mandatory if logged in as system:admin"
     echo "   --project-suffix [suffix] Suffix to be added to demo project names e.g. ci-SUFFIX. If empty, user will be used as suffix."
     echo "   --run-verify              Run verify after provisioning"
@@ -44,7 +43,6 @@ ARG_USERNAME=
 ARG_PROJECT_SUFFIX=
 ARG_COMMAND=
 ARG_RUN_VERIFY=false
-ARG_BINARY_BUILD=false
 ARG_WITH_IMAGESTREAMS=false
 ARG_DEMO=
 
@@ -107,9 +105,6 @@ while :; do
             ;;
         --run-verify)
             ARG_RUN_VERIFY=true
-            ;;
-        --binary)
-            ARG_BINARY_BUILD=true
             ;;
         --with-imagestreams)
             ARG_WITH_IMAGESTREAMS=true
@@ -228,6 +223,14 @@ function create_projects() {
   oc new-project "${PRJ[0]}" --display-name="${PRJ[1]}" --description="${PRJ[2]}" >/dev/null
 }
 
+function import_imagestreams_and_templates() {
+ # Import the image streams
+ oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/jboss-image-streams.json
+ # Import the tempplates
+ oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/processserver/processserver64-postgresql-s2i.json
+ oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/processserver/processserver64-postgresql-persistent-s2i.json
+}
+
 function create_secrets() {
   pushd /tmp
   echo_header "Creating keystores..."
@@ -263,6 +266,11 @@ function create_application() {
   # TODO: Introduce variables in the template if required.
   oc process -f templates/client-onboarding-process.yaml -p GIT_URI="$GIT_URI" -p GIT_REF="$GIT_REF" -n $PRJ | oc create -f - -n $PRJ
 
+  if [ "$ARG_WITH_IMAGESTREAMS" = true ] ; then
+    # Patch the bc to use the ImageStreams in the current project
+    oc patch bc/co --type='json' -p="[{'op': 'replace', 'path': '/spec/strategy/sourceStrategy/from/namespace', 'value': '$PRJ'}]"
+  fi
+
   # Don't need to patch, because the template we've used is already pre-patched.
   #echo_header "Patching the BuildConfig..."
   # Wait for the BuildConfig to become available
@@ -279,27 +287,10 @@ oc expose svc fsi-backoffice --name=entando-fsi-backoffice
 
 }
 
-#function create_application_binary() {
-#  echo_header "Creating Client Onboarding Build and Deployment config."
-#  oc process -f openshift/templates/optashift-employee-rostering-template-binary.yaml -p GIT_URI="$GIT_URI" -p GIT_REF="$GIT_REF" -n $PRJ | oc create -f - -n $PRJ
-#}
-
 function build_and_deploy() {
   echo_header "Starting OpenShift build and deploy..."
   oc start-build co
 #  oc start-build client-onboarding-entando
-}
-
-#function build_and_deploy_binary() {
-#  start_maven_build
-#
-#  echo_header "Starting OpenShift binary deploy..."
-#  oc start-build employee-rostering --from-file=target/ROOT.war
-#}
-
-function start_maven_build() {
-    echo_header "Starting local Maven build..."
-    mvn clean install -P openshift
 }
 
 function verify_build_and_deployments() {
@@ -389,14 +380,13 @@ case "$ARG_COMMAND" in
 	create_secrets
 	create_service_account
 
-        if [ "$ARG_BINARY_BUILD" = true ] ; then
-            create_application_binary
-            build_and_deploy_binary
-        else
-            create_application
-            #build starts automatically.
-            #build_and_deploy
-        fi
+        if [ "$ARG_WITH_IMAGESTREAMS" = true ] ; then
+	   import_imagestreams_and_templates
+	fi
+
+        create_application
+        #build starts automatically.
+        #build_and_deploy
 
         if [ "$ARG_RUN_VERIFY" = true ] ; then
           echo "Waiting for deployments to finish..."
@@ -410,11 +400,7 @@ case "$ARG_COMMAND" in
 
         print_info
 
-        if [ "$ARG_BINARY_BUILD" = true ] ; then
-            build_and_deploy_binary
-        else
-            build_and_deploy
-        fi
+        build_and_deploy
 
         if [ "$ARG_RUN_VERIFY" = true ] ; then
           echo "Waiting for deployments to finish..."
