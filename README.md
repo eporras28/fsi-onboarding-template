@@ -72,17 +72,28 @@ Now that we've configured ImageStreams and Templates we can provision our demo. 
 To run the demo just open your web browser and point to [https://localhost:8443/console/](https://localhost:8443/). Login with `developer/developer` credentials and click on `Client Onboarding` project.
 
 Now on the `Overview` page you'll see three applicantions:
+
 __fsi-backoffice__ 
-*TODO* Add a description and the credentials to use
+
+In the _fsi-backoffice_ application you can access with the following users:
+
+* `account/adminadmin` this user starts the process
+* `legal/adminadmin` this user reviews legal documents
+* `knowledge/adminadmin` this user reviews non legal documents
+* `Manager/adminadmin` this user reviews all the processes
+
 
 [http://fsi-backoffice-client-onboarding-developer.127.0.0.1.xip.io/fsi-backoffice/](http://fsi-backoffice-client-onboarding-developer.127.0.0.1.xip.io/fsi-backoffice/)
 
+
 __fsi-customer__
+
 *TODO* Add a description and the credentials to use
 
 [http://fsi-customer-client-onboarding-developer.127.0.0.1.xip.io/fsi-customer/](http://fsi-customer-client-onboarding-developer.127.0.0.1.xip.io/fsi-customer/)
 
-__processserver64-postgresql-s2i__ 
+__processserver64-postgresql-s2i__
+
 *TODO* Add a description
 
 ## Building the Virtual Machine
