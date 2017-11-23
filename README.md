@@ -69,7 +69,7 @@ Now that we've configured ImageStreams and Templates we can provision our demo. 
 
 ### Run the demo
 
-To run the demo just open your web browser and point to [https://localhost:8443/console/](https://localhost:8443/). Login with `developer/developer` credentails and click on `Client Onboarding` project.
+To run the demo just open your web browser and point to [https://localhost:8443/console/](https://localhost:8443/). Login with `developer/developer` credentials and click on `Client Onboarding` project.
 
 Now on the `Overview` page you'll see three applicantions:
 __fsi-backoffice__ 
