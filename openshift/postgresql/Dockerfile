@@ -17,3 +17,5 @@ RUN chmod 755 /var/lib/pgsql/provision_data.sh && chmod 755 /var/lib/pgsql/wait_
 RUN chown postgres:root /var/lib/pgsql/provision_data.sh && chown postgres:root /var/lib/pgsql/wait_for_postgres.sh
 USER postgres
 
+CMD ["run-postgresql", "&&", "/var/lib/pgsql/wait_for_postgres.sh", "/var/lib/pgsql/provision_data.sh"]
+
