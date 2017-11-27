@@ -11,7 +11,9 @@ MAINTAINER ddoyle <ddoyle@redhat.com>
 #############################################
 #ADD
 COPY contrib/provision_data.sh /var/lib/pgsql/provision_data.sh
+COPY contrib/wait_for_postgres.sh /var/lib/pgsql/wait_for_postgres.sh
 USER root
-RUN chmod 755 /var/lib/pgsql/provision_data.sh
-RUN chown postgres:root /var/lib/pgsql/provision_data.sh
+RUN chmod 755 /var/lib/pgsql/provision_data.sh && chmod 755 /var/lib/pgsql/wait_for_postgres.sh
+RUN chown postgres:root /var/lib/pgsql/provision_data.sh && chown postgres:root /var/lib/pgsql/wait_for_postgres.sh
 USER postgres
+
