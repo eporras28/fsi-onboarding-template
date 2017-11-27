@@ -11,3 +11,4 @@ MAINTAINER ddoyle <ddoyle@redhat.com>
 #############################################
 #ADD
 COPY contrib/provision_data.sh /var/lib/pgsql/provision_data.sh
+RUN chmod 755 /var/lib/pgsql/provision_data.sh
