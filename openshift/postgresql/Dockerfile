@@ -12,12 +12,14 @@ MAINTAINER ddoyle <ddoyle@redhat.com>
 #ADD
 COPY contrib/provision_data.sh /var/lib/pgsql/provision_data.sh
 COPY contrib/wait_for_postgres.sh /var/lib/pgsql/wait_for_postgres.sh
+COPY contrib/run-postgres-and-provision-data.sh /var/lib/pgsql/run-postgres-and-provision-data.sh
 USER root
-RUN chmod 755 /var/lib/pgsql/provision_data.sh && chmod 755 /var/lib/pgsql/wait_for_postgres.sh
-RUN chown postgres:root /var/lib/pgsql/provision_data.sh && chown postgres:root /var/lib/pgsql/wait_for_postgres.sh
+RUN chmod 755 /var/lib/pgsql/provision_data.sh && chmod 755 /var/lib/pgsql/wait_for_postgres.sh && chmod 755 /var/lib/pgsql/run-postgres-and-provision-data.sh
+RUN chown postgres:root /var/lib/pgsql/provision_data.sh && chown postgres:root /var/lib/pgsql/wait_for_postgres.sh && chown postgres:root /var/lib/pgsql/run-postgres-and-provision-data.sh
 USER postgres
 
 #CMD ["run-postgresql", "&&", "/var/lib/pgsql/wait_for_postgres.sh", "/var/lib/pgsql/provision_data.sh"]
-CMD "'run-postgresql' && '/var/lib/pgsql/wait_for_postgres.sh /var/lib/pgsql/provision_data.sh'"
+#CMD "'run-postgresql' && '/var/lib/pgsql/wait_for_postgres.sh /var/lib/pgsql/provision_data.sh'"
+CMD ["/var/lib/pgsql/run-postgres-and-provision-data.sh"]
 
 
