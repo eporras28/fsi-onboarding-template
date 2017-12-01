@@ -264,26 +264,30 @@ function create_service_account() {
 function create_application() {
   echo_header "Creating Client Onboarding Build and Deployment config."
   # TODO: Introduce variables in the template if required.
-  oc process -f templates/client-onboarding-process.yaml -p GIT_URI="$GIT_URI" -p GIT_REF="$GIT_REF" -n $PRJ | oc create -f - -n $PRJ
+
+  oc process -f templates/client-onboarding-process.yaml -p GIT_URI="$GIT_URI" -p GIT_REF="$GIT_REF" -p PRJ_NAMESPACE=$PRJ -n $PRJ | oc create -f - -n $PRJ
+
+  #TODO: We actually need to patch all the namespaces of the ImageStreams in the template.
+  # OR: We need to paramaterize this and pass the name of the project in this script.
+  # After that, we only have to patch the namespaces of the MW ImageStreams.
 
   if [ "$ARG_WITH_IMAGESTREAMS" = true ] ; then
     # Patch the bc to use the ImageStreams in the current project
     oc patch bc/co --type='json' -p="[{'op': 'replace', 'path': '/spec/strategy/sourceStrategy/from/namespace', 'value': '$PRJ'}]"
   fi
-
   # Don't need to patch, because the template we've used is already pre-patched.
   #echo_header "Patching the BuildConfig..."
   # Wait for the BuildConfig to become available
   #wait_while_empty "Build Config" 600 "oc get bc/co | grep co"
   #oc patch bc/co -p '{"spec":{"strategy":{"sourceStrategy":{"from":{"name":"jboss-processserver64-openshift:1.0"}}}}}'
 #  oc process -f openshift/templates/client-onboarding-entando-template.yaml
-# Entando instances creation
-echo_header "Creating Entando instances fsi-customer and fsi-backoffice."
+  # Entando instances creation
+  echo_header "Creating Entando instances fsi-customer and fsi-backoffice."
 
-oc new-app https://github.com/pietrangelo/fsi-customer --name fsi-customer
-oc expose svc fsi-customer --name=entando-fsi-customer
-oc new-app https://github.com/pietrangelo/fsi-backoffice --name fsi-backoffice
-oc expose svc fsi-backoffice --name=entando-fsi-backoffice
+  oc new-app https://github.com/pietrangelo/fsi-customer --name fsi-customer
+  oc expose svc fsi-customer --name=entando-fsi-customer
+  oc new-app https://github.com/pietrangelo/fsi-backoffice --name fsi-backoffice
+  oc expose svc fsi-backoffice --name=entando-fsi-backoffice
 
 }
 
