@@ -220,7 +220,6 @@ objects:
         from:
           kind: ImageStreamTag
           name: co:latest
-          namespace: client-onboarding-developer
       type: ImageChange
     - type: ConfigChange
   status:
@@ -250,6 +249,23 @@ objects:
     strategy:
       activeDeadlineSeconds: 21600
       recreateParams:
+        post:
+          execNewPod:
+            command:
+            - /bin/bash
+            - /tmp/config-files/wait_for_postgres.sh
+            - /tmp/config-files/provision_data.sh
+            containerName: co-postgresql
+            env:
+            - name: POSTGRESQL_HOSTNAME
+              value: co-postgresql
+            - name: POSTGRESQL_USER
+              value: userPoK
+            - name: POSTGRESQL_PASSWORD
+              value: OmEJPWCy
+            volumes:
+            - config-volume
+          failurePolicy: Abort
         timeoutSeconds: 600
       resources: {}
       type: Recreate
@@ -276,7 +292,7 @@ objects:
             value: root
           - name: POSTGRESQL_MAX_CONNECTIONS
           - name: POSTGRESQL_SHARED_BUFFERS
-          image: centos/postgresql-95-centos7@sha256:4e4ace155f41924b9d922b4e975d98fce5f926d18a2bbb9a87dfd0392bb85086
+          image: centos/postgresql-95-centos7@sha256:89dbaa4511b6370f878efd7233c1728f33c935d92b7b33ae09ebf75d43b874f1
           imagePullPolicy: Always
           name: co-postgresql
           ports:
@@ -285,11 +301,19 @@ objects:
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/config-files
+            name: config-volume
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         schedulerName: default-scheduler
         securityContext: {}
         terminationGracePeriodSeconds: 60
+        volumes:
+        - configMap:
+            defaultMode: 493
+            name: co-postgresql-config-files
+          name: config-volume
     test: false
     triggers:
     - imageChangeParams:
@@ -447,8 +471,8 @@ objects:
       host: secure-co-client-onboarding-developer.127.0.0.1.xip.io
       routerName: router
       wildcardPolicy: None
-- kind: ConfigMap
-  apiVersion: v1
+- apiVersion: v1
+  kind: ConfigMap
   metadata:
     name: co-postgresql-config-files
   data:
@@ -473,47 +497,12 @@ objects:
           echo "Path is: $PATH"
           echo "When postgres is available, we will run this command: $cmd"
           echo "Waiting for PostgreSQL at: $POSTGRESQL_HOSTNAME"
-          #until runuser -l postgres -c 'pg_isready' 2>/dev/null; do
-          #until pg_isready -h $POSTGRESQL_HOSTNAME 2>/dev/null; do
-          until pg_isready -h $POSTGRESQL_HOSTNAME; do
-            #>&2 echo "Postgres is unavailable - sleeping for $timer seconds"
-            pg_isready -h $POSTGRESQL_HOSTNAME
+          until pg_isready -h $POSTGRESQL_HOSTNAME 2>/dev/null; do
             echo "Postgres is unavailable - sleeping for $timer seconds"
             sleep $timer
           done
-          #>&2 echo "Postgres is up - executing command"
           echo "Postgres is up - executing command"
           exec $cmd
-- kind: Pod
-  apiVersion: v1
-  metadata:
-    name: co-postgresql-config-client
-  spec:
-    containers:
-    - name: co-postgresql-config
-      image: centos/postgresql-95-centos7@sha256:4e4ace155f41924b9d922b4e975d98fce5f926d18a2bbb9a87dfd0392bb85086
-      command:
-      - /bin/bash
-      - /tmp/config-files/wait_for_postgres.sh
-      - /tmp/config-files/provision_data.sh
-      env:
-      - name: POSTGRESQL_HOSTNAME
-        value: co-postgresql
-      - name: POSTGRESQL_USER
-        value: userPoK
-      - name: POSTGRESQL_PASSWORD
-        value: OmEJPWCy
-      - name: POSTGRESQL_DATABASE
-        value: root
-      volumeMounts:
-      - mountPath: /tmp/config-files
-        name: config-volume
-    volumes:
-    - name: config-volume
-      configMap:
-        defaultMode: 0755
-        name: co-postgresql-config-files
-    restartPolicy: OnFailure
 parameters:
 - description: Git source URI for application
   displayName: Git source repository
@@ -525,13 +514,3 @@ parameters:
   name: GIT_REF
   required: true
   value: master
-- description: Project namespace
-  displayName: Project namespace
-  name: PRJ_NAMESPACE
-  required: true
-  value: master
-- description: PostgreSQL Hostname
-  displayName: PostgreSQL Hostname
-  name: POSTGRESQL_HOSTNAME
-  required: true
-  value: co-postgresql

@@ -231,41 +231,19 @@ function import_imagestreams_and_templates() {
  oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/processserver/processserver64-postgresql-persistent-s2i.json
 }
 
-function create_secrets() {
-  pushd /tmp
-  echo_header "Creating keystores..."
-  # First remove the old keystores, otherwise the keytool script will complain.
-  if [ -f keystore.jks ]; then
-    rm keystore.jks
-  fi
-  if [ -f jgroups.jceks ]; then
-    rm jgroups.jceks
-  fi
+function create_secrets_and_service_accounts() {
+  echo_header "Creating secrets and service-accounts ..."
+  oc create -f templates/secrets-and-accounts.yaml
 
-  keytool -genkeypair -alias https -storetype JKS -keystore keystore.jks -storepass jboss@01 -keypass jboss@01 --dname "CN=jim,OU=BU,O=redhat.com,L=Raleigh,S=NC,C=US"
-  keytool -genseckey -alias jgroups -storetype JCEKS -keystore jgroups.jceks -storepass jboss@01 -keypass jboss@01 --dname "CN=jim,OU=BU,O=redhat.com,L=Raleigh,S=NC,C=US"
-
-  echo_header "Creating secrets..."
-  oc create secret generic processserver-app-secret --from-file=jgroups.jceks --from-file=keystore.jks
-  popd
-}
-
-function create_service_account() {
-  echo_header "Creating Service Account..."
-  oc create serviceaccount processserver-service-account
-
-  echo_header "Adding policies..."
+  echo_header "Adding policies to service-account ..."
   oc policy add-role-to-user view system:serviceaccount:client-onboarding:processserver-service-account
-
-  echo_header "Adding secrets to service account..."
-  oc secret add sa/processserver-service-account secret/processserver-app-secret
 }
 
 function create_application() {
   echo_header "Creating Client Onboarding Build and Deployment config."
   # TODO: Introduce variables in the template if required.
 
-  oc process -f templates/client-onboarding-process.yaml -p GIT_URI="$GIT_URI" -p GIT_REF="$GIT_REF" -p PRJ_NAMESPACE=$PRJ -n $PRJ | oc create -f - -n $PRJ
+  oc process -f templates/client-onboarding-process.yaml -p GIT_URI="$GIT_URI" -p GIT_REF="$GIT_REF" -n $PRJ | oc create -f - -n $PRJ
 
   #TODO: We actually need to patch all the namespaces of the ImageStreams in the template.
   # OR: We need to paramaterize this and pass the name of the project in this script.
@@ -381,12 +359,11 @@ case "$ARG_COMMAND" in
         print_info
         create_projects
 
-	create_secrets
-	create_service_account
+	      create_secrets_and_service_accounts
 
         if [ "$ARG_WITH_IMAGESTREAMS" = true ] ; then
-	   import_imagestreams_and_templates
-	fi
+	        import_imagestreams_and_templates
+	      fi
 
         create_application
         #build starts automatically.
