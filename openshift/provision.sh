@@ -224,19 +224,21 @@ function create_projects() {
 }
 
 function import_imagestreams_and_templates() {
+  echo_header "Importing ImageStreas ..."
  # Import the image streams
  oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/jboss-image-streams.json
  # Import the tempplates
+ echo_header "Importing Templates ..."
  oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/processserver/processserver64-postgresql-s2i.json
  oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/processserver/processserver64-postgresql-persistent-s2i.json
 }
 
 function create_secrets_and_service_accounts() {
   echo_header "Creating secrets and service-accounts ..."
-  oc create -f templates/secrets-and-accounts.yaml
+  oc process -f templates/secrets-and-accounts.yaml | oc create -f -
 
   echo_header "Adding policies to service-account ..."
-  oc policy add-role-to-user view system:serviceaccount:client-onboarding:processserver-service-account
+  oc policy add-role-to-user view system:serviceaccount:$PRJ:processserver-service-account
 }
 
 function create_application() {
