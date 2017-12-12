@@ -224,7 +224,7 @@ function create_projects() {
 }
 
 function import_imagestreams_and_templates() {
-  echo_header "Importing ImageStreas ..."
+  echo_header "Importing ImageStreams ..."
  # Import the image streams
  oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/jboss-image-streams.json
  # Import the tempplates
