@@ -147,10 +147,12 @@ PRJ=("client-onboarding-$PRJ_SUFFIX" "Client Onboarding" "Red Hat JBoss BPM Suit
 #GIT_REF="openshift-template"
 
 # config
-# TODO: Configure correct Github account.
 GITHUB_ACCOUNT=${GITHUB_ACCOUNT:-entando}
 GIT_REF=${GITHUB_REF:-master}
 GIT_URI=https://github.com/$GITHUB_ACCOUNT/fsi-onboarding-bpm
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+TEMPLATES_DIR=$SCRIPT_DIR/templates
 
 ################################################################################
 # DEMO MATRIX                                                                  #
@@ -189,6 +191,7 @@ function print_info() {
   echo "Project suffix:      $PRJ_SUFFIX"
   echo "GitHub repo:         $GIT_URI"
   echo "GitHub branch/tag:   $GITHUB_REF"
+  echo "Templates dir:       $TEMPLATES_DIR"
 }
 
 # waits while the condition is true until it becomes false or it times out
@@ -235,7 +238,7 @@ function import_imagestreams_and_templates() {
 
 function create_secrets_and_service_accounts() {
   echo_header "Creating secrets and service-accounts ..."
-  oc process -f templates/secrets-and-accounts.yaml | oc create -f -
+  oc process -f $TEMPLATES_DIR/secrets-and-accounts.yaml | oc create -f -
 
   echo_header "Adding policies to service-account ..."
   oc policy add-role-to-user view system:serviceaccount:$PRJ:processserver-service-account
@@ -245,7 +248,7 @@ function create_application() {
   echo_header "Creating Client Onboarding Build and Deployment config."
   # TODO: Introduce variables in the template if required.
 
-  oc process -f templates/client-onboarding-process.yaml -p GIT_URI="$GIT_URI" -p GIT_REF="$GIT_REF" -n $PRJ | oc create -f - -n $PRJ
+  oc process -f $TEMPLATES_DIR/client-onboarding-process.yaml -p GIT_URI="$GIT_URI" -p GIT_REF="$GIT_REF" -n $PRJ | oc create -f - -n $PRJ
 
   #TODO: We actually need to patch all the namespaces of the ImageStreams in the template.
   # OR: We need to paramaterize this and pass the name of the project in this script.
