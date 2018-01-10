@@ -159,6 +159,8 @@ objects:
             value: gEnskvrn
           - name: HORNETQ_QUEUES
           - name: HORNETQ_TOPICS
+          - name: ENTANDO_BASE_URL
+            value: ${ENTANDO_BASE_URL} 
           image: co
           imagePullPolicy: Always
           livenessProbe:
@@ -514,3 +516,7 @@ parameters:
   name: GIT_REF
   required: true
   value: master
+- description: Entando base URL
+  displayName: Entando base URL
+  name: ENTANDO_BASE_URL
+  value: http://fsi-customer.serv.run/fsi-customer/

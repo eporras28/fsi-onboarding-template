@@ -246,9 +246,26 @@ function create_secrets_and_service_accounts() {
 
 function create_application() {
   echo_header "Creating Client Onboarding Build and Deployment config."
-  # TODO: Introduce variables in the template if required.
+ 
 
-  oc process -f $TEMPLATES_DIR/client-onboarding-process.yaml -p GIT_URI="$GIT_URI" -p GIT_REF="$GIT_REF" -n $PRJ | oc create -f - -n $PRJ
+  # Entando instances creation
+  echo_header "Creating Entando instances fsi-customer and fsi-backoffice."
+
+  oc new-app https://github.com/entando/fsi-customer-openshift --name fsi-customer
+  oc expose svc fsi-customer --name=entando-fsi-customer --path=/fsi-customer/
+  #  oc new-app https://github.com/pietrangelo/fsi-backoffice --name fsi-backoffice
+  # We reuse the ImageStream that is auto-created by the previous new-app, otherwise we'll get an error that that IS already exists.
+  # TODO: Check if this is still needed in OCP 3.7
+  oc new-app entando-base-image-432:latest~https://github.com/entando/fsi-backoffice-openshift --name fsi-backoffice --strategy=docker --allow-missing-imagestream-tags
+  # For one reason or the other, the previous command does not create a service, so we need to expose a service first.
+  oc expose dc fsi-backoffice --port 8080
+  oc expose svc fsi-backoffice --name=entando-fsi-backoffice --path=/fsi-backoffice/
+
+  # We require the route to the fsi-customer app in our BPM deployment to be able to generate e-mails with the correct link.
+  ENTANDO_FSI_CUSTOMER_ROUTE=$(oc get route entando-fsi-customer | awk 'FNR > 1 {print $2}')
+
+  oc process -f $TEMPLATES_DIR/client-onboarding-process.yaml -p GIT_URI="$GIT_URI" -p GIT_REF="$GIT_REF" -p ENTANDO_BASE_URL="http://$ENTANDO_FSI_CUSTOMER_ROUTE/fsi-customer/" -n $PRJ | oc create -f - -n $PRJ
+  #oc process -f $TEMPLATES_DIR/client-onboarding-process.yaml -p GIT_URI="$GIT_URI" -p GIT_REF="$GIT_REF" -n $PRJ | oc create -f - -n $PRJ
 
   #TODO: We actually need to patch all the namespaces of the ImageStreams in the template.
   # OR: We need to paramaterize this and pass the name of the project in this script.
@@ -258,24 +275,7 @@ function create_application() {
     # Patch the bc to use the ImageStreams in the current project
     oc patch bc/co --type='json' -p="[{'op': 'replace', 'path': '/spec/strategy/sourceStrategy/from/namespace', 'value': '$PRJ'}]"
   fi
-  # Don't need to patch, because the template we've used is already pre-patched.
-  #echo_header "Patching the BuildConfig..."
-  # Wait for the BuildConfig to become available
-  #wait_while_empty "Build Config" 600 "oc get bc/co | grep co"
-  #oc patch bc/co -p '{"spec":{"strategy":{"sourceStrategy":{"from":{"name":"jboss-processserver64-openshift:1.0"}}}}}'
-#  oc process -f openshift/templates/client-onboarding-entando-template.yaml
-  # Entando instances creation
-  echo_header "Creating Entando instances fsi-customer and fsi-backoffice."
 
-  oc new-app https://github.com/entando/fsi-customer-openshift --name fsi-customer
-  oc expose svc fsi-customer --name=entando-fsi-customer --path=/fsi-customer/
-#  oc new-app https://github.com/pietrangelo/fsi-backoffice --name fsi-backoffice
-  # We reuse the ImageStream that is auto-created by the previous new-app, otherwise we'll get an error that that IS already exists.
-  # TODO: Check if this is still needed in OCP 3.7
-  oc new-app entando-base-image-432:latest~https://github.com/entando/fsi-backoffice-openshift --name fsi-backoffice --strategy=docker --allow-missing-imagestream-tags
-  # For one reason or the other, the previous command does not create a service, so we need to expose a service first.
-  oc expose dc fsi-backoffice --port 8080
-  oc expose svc fsi-backoffice --name=entando-fsi-backoffice --path=/fsi-backoffice/
 
 }
 
@@ -366,8 +366,8 @@ case "$ARG_COMMAND" in
     setup)
         echo "Setting up and deploying Client Onboading demo ($ARG_DEMO)..."
 
-        print_info
         create_projects
+        print_info
 
 	      create_secrets_and_service_accounts
 
