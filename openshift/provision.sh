@@ -268,14 +268,14 @@ function create_application() {
   echo_header "Creating Entando instances fsi-customer and fsi-backoffice."
 
   oc new-app https://github.com/pietrangelo/fsi-customer --name fsi-customer
-  oc expose svc fsi-customer --name=entando-fsi-customer
+  oc expose svc fsi-customer --name=entando-fsi-customer --path=/fsi-customer/
 #  oc new-app https://github.com/pietrangelo/fsi-backoffice --name fsi-backoffice
   # We reuse the ImageStream that is auto-created by the previous new-app, otherwise we'll get an error that that IS already exists.
   # TODO: Check if this is still needed in OCP 3.7
   oc new-app entando-base-image-432:latest~https://github.com/pietrangelo/fsi-backoffice --name fsi-backoffice --strategy=docker --allow-missing-imagestream-tags
   # For one reason or the other, the previous command does not create a service, so we need to expose a service first.
   oc expose dc fsi-backoffice --port 8080
-  oc expose svc fsi-backoffice --name=entando-fsi-backoffice
+  oc expose svc fsi-backoffice --name=entando-fsi-backoffice --path=/fsi-backoffice/
 
 }
 
