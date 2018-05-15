@@ -229,7 +229,7 @@ function create_projects() {
 function import_imagestreams_and_templates() {
   echo_header "Importing ImageStreams ..."
  # Import the image streams
- oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/jboss-image-streams.json
+ oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/processserver/processserver64-image-stream.json
  # Import the tempplates
  echo_header "Importing Templates ..."
  oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/processserver/processserver64-postgresql-s2i.json
@@ -246,7 +246,7 @@ function create_secrets_and_service_accounts() {
 
 function create_application() {
   echo_header "Creating Client Onboarding Build and Deployment config."
- 
+
 
   # Entando instances creation
   echo_header "Creating Entando instances fsi-customer and fsi-backoffice."
