@@ -42,9 +42,9 @@ Our demo uses the JBoss BPM Suite Intelligent Process Server as the process exec
 
 * First, login to OpenShift as the system admin: `oc login -u system:admin`
 
-* Run the following command to install the JBoss ImageStreams:
+* Run the following command to install the Process Server ImageStreams:
 ```
-oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/jboss-image-streams.json -n openshift
+oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/processserver/processserver64-image-stream.json -n openshift
 ```
 * Run the following commands to install the Process Server templates:
 ```
